@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head.ejs') %>
+<%- include('../partials/head.ejs') %> <!-- Include head partial -->
 
 <body>
     <div id="wrapper">
-        <%- include('../partials/header') %>
-        <%- include('../partials/navigation') %>
+        <%- include('../partials/header') %> <!-- Include header partial -->
+        <%- include('../partials/navigation') %> <!-- Include navigation partial -->
 
         <main>
-            <%- body %>
+            <%- body %> <!-- Inject content here (e.g., content from index.ejs) -->
         </main>
 
-        <%- include('../partials/footer') %>
+        <%- include('../partials/footer') %> <!-- Include footer partial -->
     </div>
 </body>
 </html>

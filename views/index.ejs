@@ -1,1 +1,47 @@
-<h1>Rhea June Reyes</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSE Motors Home</title>
+  <link rel="stylesheet" href="/css/styles.css" media="screen">
+</head>
+<body>
+  <!-- Header Partial -->
+  <% include partials/header %>
+
+  <!-- Main Content -->
+  <main>
+    <section class="hero">
+      <img src="/images/hero-large.jpg" alt="CSE Motors" class="hero-image">
+      <div class="hero-content">
+        <h1>Welcome to CSE Motors</h1>
+        <p>Your trusted partner in vehicle sales and service.</p>
+        <a href="#services" class="cta-button">Explore Our Services</a>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <h2>Our Services</h2>
+      <div class="service-item">
+        <img src="/images/service1.jpg" alt="Service 1">
+        <h3>Vehicle Sales</h3>
+        <p>Find the perfect car for you.</p>
+      </div>
+      <div class="service-item">
+        <img src="/images/service2.jpg" alt="Service 2">
+        <h3>Car Repairs</h3>
+        <p>Reliable car repairs to keep you on the road.</p>
+      </div>
+      <div class="service-item">
+        <img src="/images/service3.jpg" alt="Service 3">
+        <h3>Vehicle Leasing</h3>
+        <p>Flexible leasing options for your needs.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Partial -->
+  <% include partials/footer %>
+</body>
+</html>
