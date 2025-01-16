@@ -114,14 +114,14 @@ nav li:hover {
 }
 .cta-button{
   padding: 10px 20px;
-  background-color: #fc3f14;
+  background-color: #000000;
   color: white;
   text-decoration: none;
   font-size: larger;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 .cta-button:hover{
-  background-color: #0056b3;
+  background-color: #004186;
 }
 /* Services */
 .services {
