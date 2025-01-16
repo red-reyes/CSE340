@@ -40,6 +40,7 @@ header a{
 }
 .siteName a{
   font-size: 30pt;
+  font-weight: bold;
 }
 .tools a{
   font-size: large;
@@ -94,34 +95,30 @@ nav li:hover {
 .hero-content {
   width: 40%;
   position: relative;
-
   text-align: left;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.7);
 }
 .hero-content h1{
   color:#0056b3;
-  font-size: x-larger;
+  font-size: 20pt;
 }
 .hero-content h2{
   color:#000000;
-  font-size: larger;
+  font-size: 16pt;
 }
 .hero-content p{
   color: #000000;
-  font-size: large;
+  font-size: 12pt;
   padding-bottom: 20px;
 }
-.cta-button{
-  padding: 10px 20px;
-  background-color: #000000;
-  color: white;
-  text-decoration: none;
-  font-size: larger;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+.cta-button img{
+  width:70%;
+  height: auto;
 }
-.cta-button:hover{
-  background-color: #004186;
+.cta-button img:hover{
+  transform: scale(1.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 /* Services */
 .services {
@@ -165,10 +162,18 @@ footer {
 
 /* Media Queries for Larger Screens */
 @media screen and (min-width: 768px) {
+  .hero-content h1{
+    font-size: 30pt;
+  }
+  .hero-content h2{
+    font-size: 25pt;
+  }
+  .hero-content p{
+    font-size: 16pt;
+  }  
   .hero {
     flex-direction: row;
     justify-content: space-between;
-    text-align: left;
   }
 
   .hero-content {
