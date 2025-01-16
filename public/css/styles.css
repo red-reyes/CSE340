@@ -107,10 +107,11 @@ nav li:hover {
   color:#000000;
   font-size: 16pt;
 }
-.hero-content p{
+.hero-content h3{
   color: #000000;
-  font-size: 12pt;
+  font-size: 14pt;
   padding-bottom: 20px;
+  line-height: 1.5;
 }
 .cta-button img{
   width:70%;
