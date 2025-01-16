@@ -3,44 +3,48 @@
 *:after {
   box-sizing: border-box;
 }
-
+:root {
+  --primary-background: #fff;
+  --main-accent: #019ebe;
+}
+body{
+  margin: 0;
+  padding:0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body img{
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  padding: 0;
+  margin: 0;
+  background-repeat: no-repeat;
+}
 #wrapper {
   width: 95%;
   margin: 20px auto;
   padding-bottom: 1em;
-  border: 2pt solid #00eeff;
-  background: #ffffff;
+  border: 2pt solid #019ebe;
+  background-color: white;
 }
-
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-image: url('https://images.unsplash.com/photo-1659455298007-1004db971649?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-a {
-  text-decoration: none;
-  color: #000000;
-}
-
-a:hover {
-  color: #0056b3;
-}
-#top-header{
+/* header */
+header{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   padding: 20px;
 }
-.siteName {
-  text-align: left;
-  font-size: 40pt;
-  font-weight: bold;
+header a{
+  text-decoration: none;
+  color:#000000;
 }
-#tools{
-  text-align: right;
+.siteName a{
+  font-size: 30pt;
 }
+.tools a{
+  font-size: large;
+}
+
 nav {
   background-color: black; 
   padding: 0;
@@ -59,95 +63,104 @@ nav li {
   color: white;
   text-align: center;
   padding: 15px;
-  font-size: 18px;
+  font-size: medium;
 }
 nav li:hover {
-  color:#ff5733;
+  color:#fc7051;
 }
+/* main */
 .hero {
+  position: relative;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2px;
-  color: rgb(0, 0, 0);
 }
-
 .hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;  
+  height: 100%;
+  object-fit: contain;
+  z-index: 0;
+  margin: 0 auto;
   width: 100%;
-  height: auto;
+  justify-content: center;
+  align-items: center;
 }
-
+.hero-image img{
+  width: 80%;
+  padding: 20px;
+}
 .hero-content {
-  margin-top: 10px;
+  width: 40%;
+  position: relative;
+
+  text-align: left;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
 }
-.hero-content h1 {
-  color: #17005e;
+.hero-content h1{
+  color:#0056b3;
+  font-size: x-larger;
 }
-.cta-button img{
-  width: 90%;
+.hero-content h2{
+  color:#000000;
+  font-size: larger;
 }
-.cta-button img:hover{
-  transform: scale(1.1);
+.hero-content p{
+  color: #000000;
+  font-size: large;
+  padding-bottom: 20px;
+}
+.cta-button{
+  padding: 10px 20px;
+  background-color: #fc3f14;
+  color: white;
+  text-decoration: none;
+  font-size: larger;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
+.cta-button:hover{
+  background-color: #0056b3;
+}
+/* Services */
 .services {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   padding: 20px;
-  column-gap: 20px;
 }
 .upgrades {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto; 
-  gap: 10px;
-  padding: 20px;
+  gap: 20px;
 }
-
 .upgrade{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(55, 178, 255);
-  padding: 10px;
-  border: 2pt solid #0f003d;
   height: 30vh;
 }
-.upgrade h4{
+.upgrade img{
+  width: 80%;
+  height: 40%;
+  object-fit: contain;
+  padding: 20px;
+  background-color: rgb(55, 178, 255);
+  border: 2pt solid #0f003d;
+}
+.upgrade p{
   text-decoration: underline;
 }
-.service-item {
-  width: 40%;
-  background-color: white;
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5;
-}
-
-img[src="/images/vehicles/adventador.jpg"] {
-  width: 70%;
-}
-.service-item h3{
-  font-size: 20pt;
-  font-weight: bold;
-}
 .service-item li{
-  text-align: left;
+  line-height: 2.5;
+  font-size: large;
 }
 footer {
-  background-color: #f8f8f8;
   color:#333;
-  text-align: center;
-  padding: 20px;
+  text-align: left;
+  padding-left: 20px;
 }
 
 /* Media Queries for Larger Screens */
@@ -161,22 +174,23 @@ footer {
   .hero-content {
     max-width: 50%;
   }
-
+  .services {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+  }  
   .services {
     grid-template-columns: 1fr 1fr 1fr;
   }
-
   .service-item {
     padding: 2rem;
+    width: 40%;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .hero {
     padding: 4rem;
-  }
-
-  .hero-content {
-    font-size: 1.5rem;
   }
 }
