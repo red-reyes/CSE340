@@ -114,7 +114,7 @@ nav li:hover {
   line-height: 1.5;
 }
 .cta-button img{
-  width:70%;
+  width:100%;
   height: auto;
 }
 .cta-button img:hover{
@@ -179,6 +179,9 @@ footer {
 
   .hero-content {
     max-width: 50%;
+  }
+  .cta-button img{
+    width:70%;
   }
   .services {
     display: flex;
