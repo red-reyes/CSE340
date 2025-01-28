@@ -1,0 +1,95 @@
+/* General page styles */
+  
+  .container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Vehicle image */
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  /* Vehicle details section */
+  .vehicle-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .vehicle-details p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  
+  .vehicle-details strong {
+    font-weight: bold;
+  }
+  
+  /* Action buttons */
+  button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 10px 5px;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Contact Information */
+  .contact-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-info p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  
+  .contact-info strong {
+    font-weight: bold;
+  }
+  
+  /* Media Query for Mobile Devices */
+  @media (max-width: 768px) {
+    .container {
+      width: 100%;
+      padding: 15px;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    .vehicle-details p {
+      font-size: 0.9rem;
+    }
+  
+    button {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }  

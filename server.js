@@ -1,10 +1,3 @@
-/* ******************************************
- * This server.js file is the primary file of the 
- * application. It is used to control the project.
- *******************************************/
-/* ***********************
- * Require Statements
- *************************/
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const dotenv = require("dotenv");
@@ -13,33 +6,26 @@ const utilities = require("./utilities");
 const baseController = require("./controllers/baseController");
 const app = express();
 
-/* ***********************
- * View Engine and Templates
- *************************/
+// Set up view engine
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // Path to layout file
 
-/* ***********************
- * Middleware
- *************************/
+// Static file serving middleware
 app.use(express.static("public")); // Serve static files
 
-/* ***********************
- * Routes
- *************************/
-// Index route
+// Routes
 app.get("/", utilities.handleErrors(baseController.buildHome));
+
+// Inventory routes
+app.use("/inventory", require("./routes/inventory"));
 
 // File Not Found Route - must be the last route in the list
 app.use((req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page. 😔" });
 });
 
-/* ***********************
- * Express Error Handler
- * Place after all other middleware
- *************************/
+// Error Handling Middleware (global handler)
 app.use(async (err, req, res, next) => {
   let nav;
   try {
@@ -61,16 +47,11 @@ app.use(async (err, req, res, next) => {
   });
 });
 
-/* ***********************
- * Local Server Information
- * Values from .env (environment) file
- *************************/
-const port = process.env.PORT || 5000;
+// Local Server Information (environment settings)
+const port = process.env.PORT || 5500;
 const host = process.env.HOST || "localhost";
 
-/* ***********************
- * Log statement to confirm server operation
- *************************/
+// Log statement to confirm server operation
 app.listen(port, () => {
   console.log(`App listening on http://${host}:${port}`);
 });

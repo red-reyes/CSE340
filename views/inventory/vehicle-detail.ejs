@@ -1,0 +1,26 @@
+<h1><%= vehicle.make %> <%= vehicle.model %> - <%= vehicle.year %></h1>
+
+<!-- Full-size vehicle image -->
+<img src="/images/<%= vehicle.image %>" alt="<%= vehicle.make %> <%= vehicle.model %>">
+
+<!-- Vehicle details -->
+<p><strong>Price:</strong> $<%= vehicle.price.toLocaleString() %></p>
+<p><strong>Mileage:</strong> <%= vehicle.mileage.toLocaleString() %> miles</p>
+<p><strong>MPG:</strong> <%= vehicle.mpg %> MPG</p>
+<p><strong>Exterior Color:</strong> <%= vehicle.exteriorColor %></p>
+<p><strong>Interior Color:</strong> <%= vehicle.interiorColor %></p>
+<p><strong>Fuel Type:</strong> <%= vehicle.fuelType %></p>
+<p><strong>Drive Train:</strong> <%= vehicle.driveTrain %></p>
+<p><strong>Transmission:</strong> <%= vehicle.transmission %></p>
+<p><strong>Stock #:</strong> <%= vehicle.stockNumber %></p>
+<p><strong>VIN:</strong> <%= vehicle.vin %></p>
+
+<!-- Action buttons -->
+<button>Start My Purchase</button>
+<button>Contact Us</button>
+<button>Schedule Test Drive</button>
+<button>Apply For Financing</button>
+
+<!-- Contact Information -->
+<p><strong>Call Us:</strong> 801-396-7886</p>
+<p><strong>Visit Us:</strong> [Location Info]</p>
