@@ -6,6 +6,8 @@
 /* ***********************
  * Require Statements
  *************************/
+const session = require("express-session")
+const pool = require('./database/')
 const baseController = require("./controllers/baseController")
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
@@ -13,6 +15,7 @@ const dotenv = require("dotenv");
 dotenv.config(); // Load environment variables
 const utilities = require("./utilities");
 const app = express();
+const inventoryRoute = require('./routes/inventoryRoute');
 /* ***********************
  * Middleware
  * ************************/
