@@ -1,9 +1,9 @@
-const session = require("express-session")
-const pool = require('./database/')
+const baseController = require("./controllers/baseController")
 /* ******************************************
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
+
 /* ***********************
  * Require Statements
  *************************/
@@ -42,33 +42,33 @@ app.use(express.static("public")); // Serve static files
  *************************/
 app.get("/", utilities.handleErrors(baseController.buildHome));
 
-// Inventory routes
-app.use("/inventory", require("./routes/inventory"));
+// Index routes
+app.get("/", baseController.buildHome);
 
 // File Not Found Route - must be the last route in the list
-app.use((req, res, next) => {
+app.use(async(req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page. 😔" });
 });
 
-// Error Handling Middleware (global handler)
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
 app.use(async (err, req, res, next) => {
   let nav;
   try {
-    nav = await utilities.getNav(); // Fetch navigation data
+    nav = await utilities.getNav();
   } catch (error) {
-    nav = []; // Fallback to empty array if getNav() fails
+    nav = [];  // Fallback to empty array if getNav() fails
   }
 
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
-  const message =
-    err.status === 404
-      ? err.message
-      : "Oh no! There was a crash. Maybe try a different route?";
-
-  res.status(err.status || 500).render("errors/error", {
-    title: err.status || "Server Error",
+  let message = (err.status === 404) ? err.message : 'Oh no! There was a crash. Maybe try a different route?';
+  
+  res.render("errors/error", {
+    title: err.status || 'Server Error',
     message,
-    nav,
+    nav
   });
 });
 
