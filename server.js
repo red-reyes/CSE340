@@ -1,4 +1,3 @@
-const baseController = require("./controllers/baseController")
 /* ******************************************
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
@@ -7,12 +6,12 @@ const baseController = require("./controllers/baseController")
 /* ***********************
  * Require Statements
  *************************/
+const baseController = require("./controllers/baseController")
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const dotenv = require("dotenv");
 dotenv.config(); // Load environment variables
 const utilities = require("./utilities");
-const baseController = require("./controllers/baseController");
 const app = express();
 /* ***********************
  * Middleware
