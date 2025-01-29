@@ -37,7 +37,9 @@ app.set("layout", "./layouts/layout"); // Path to layout file
 // Static file serving middleware
 app.use(express.static("public")); // Serve static files
 
-// Routes
+/* ***********************
+ * Routes
+ *************************/
 app.get("/", utilities.handleErrors(baseController.buildHome));
 
 // Inventory routes
@@ -70,11 +72,16 @@ app.use(async (err, req, res, next) => {
   });
 });
 
-// Local Server Information (environment settings)
+/* ***********************
+ * Local Server Information
+ * Values from .env (environment) file
+ *************************/
 const port = process.env.PORT || 5500;
 const host = process.env.HOST || "localhost";
 
-// Log statement to confirm server operation
+/* ***********************
+ * Log statement to confirm server operation
+ *************************/
 app.listen(port, () => {
   console.log(`App listening on http://${host}:${port}`);
 });
