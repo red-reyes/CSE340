@@ -1,10 +1,20 @@
-<!-- This view will consist of three distinct sections: A content heading, a message, and the inventory items display. -->
 <% if (title) { %>
-    <h1><%= title %></h1>
-    <% } else {
-      res.redirect('/')
+  <h1><%= title %></h1>
+<% } else {
+res.redirect('/')
 } %>
 
-<%# messages() %>
+<!-- This could be your message or description section -->
+<p>Explore the available vehicles in this category.</p>
 
-<%- grid %>
+<!-- Grid for displaying vehicles -->
+<div class="vehicle-grid">
+<% grid.forEach(vehicle => { %>
+  <div class="vehicle-container">
+    <img src="<%= vehicle.inv_image_url %>" alt="<%= vehicle.inv_name %>" class="vehicle-image">
+    <h2><%= vehicle.inv_name %></h2>
+    <p><%= vehicle.inv_description %></p>
+    <a href="/inv/detail/<%= vehicle.inv_id %>" class="vehicle-link">View Details</a>
+  </div>
+<% }) %>
+</div>

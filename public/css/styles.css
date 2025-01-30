@@ -219,23 +219,4 @@ footer {
   .hero {
     padding: 4rem;
   }
-  .vehicle-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .vehicle-item {
-    border: 1px solid #ccc;
-    padding: 15px;
-    text-align: center;
-    background: white;
-  }
-  
-  .vehicle-item img {
-    width: 100%;
-    height: auto;
-  }
-  
 }

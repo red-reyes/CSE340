@@ -3,6 +3,13 @@ const utilities = require("../utilities/")
 
 const invCont = {}
 
+// error trigger
+invCont.triggerError = (req, res, next) => {
+  const error = new Error("This is a forced error to test error handling.");
+  error.status = 500;
+  next(error);
+};
+
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
