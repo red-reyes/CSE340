@@ -7,7 +7,7 @@ const invCont = {}
 invCont.triggerError = (req, res, next) => {
   const error = new Error("This is a forced error to test error handling.");
   error.status = 500;
-  next(error);
+  next(error); // Pass error to the next middleware
 };
 
 /* ***************************
