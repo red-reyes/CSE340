@@ -1,0 +1,12 @@
+<h1><%= pageTitle %></h1>
+
+<div class="vehicle-list">
+  <% vehicles.forEach(vehicle => { %>
+    <div class="vehicle-item">
+      <img src="/images/<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+      <h2><%= vehicle.inv_make %> <%= vehicle.inv_model %> - <%= vehicle.inv_year %></h2>
+      <p><strong>Price:</strong> $<%= vehicle.inv_price.toLocaleString() %></p>
+      <a href="/inventory/vehicle/<%= vehicle.inv_id %>">View Details</a>
+    </div>
+  <% }); %>
+</div>

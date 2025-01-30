@@ -18,6 +18,20 @@ const app = express();
 const inventoryRoute = require('./routes/inventoryRoute');
 
 /* ***********************
+ * Middleware
+ * ************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+/* ***********************
  * View Engine and Templates
  *************************/
 app.set("view engine", "ejs");
@@ -36,6 +50,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 app.get("/", baseController.buildHome);
 
 // Inventory routes
+app.use('inventory', inventoryRoute);
 app.use('/inv', utilities.handleErrors(inventoryRoute));
 
 // File Not Found Route - must be last route in list
