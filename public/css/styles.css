@@ -7,6 +7,9 @@
   --primary-background: #fff;
   --main-accent: #019ebe;
 }
+h1{
+  padding: 20px;
+}
 body{
   margin: 0;
   padding:0;
@@ -160,7 +163,21 @@ footer {
   text-align: left;
   padding-left: 20px;
 }
-
+/* vehicles */
+.vehicle-detail {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+.vechile-detail img {
+  aspect-ratio: 16/9;
+  padding:20px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
 /* Media Queries for Larger Screens */
 @media screen and (min-width: 768px) {
   .hero-content h1{
@@ -202,4 +219,23 @@ footer {
   .hero {
     padding: 4rem;
   }
+  .vehicle-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .vehicle-item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    text-align: center;
+    background: white;
+  }
+  
+  .vehicle-item img {
+    width: 100%;
+    height: auto;
+  }
+  
 }
