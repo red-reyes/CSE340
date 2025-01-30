@@ -16,19 +16,7 @@ dotenv.config(); // Load environment variables
 const utilities = require("./utilities");
 const app = express();
 const inventoryRoute = require('./routes/inventoryRoute');
-/* ***********************
- * Middleware
- * ************************/
-app.use(session({
-  store: new (require('connect-pg-simple')(session))({
-    createTableIfMissing: true,
-    pool,
-  }),
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  name: 'sessionId',
-}))
+
 /* ***********************
  * View Engine and Templates
  *************************/
