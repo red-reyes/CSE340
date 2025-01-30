@@ -6,8 +6,10 @@
 /* ***********************
  * Require Statements
  *************************/
+// Unit 4, Require the Session package and DB connection
 const session = require("express-session")
 const pool = require('./database/')
+
 const baseController = require("./controllers/baseController")
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
@@ -30,6 +32,13 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+// Unit 4, Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
 /* ***********************
  * View Engine and Templates
