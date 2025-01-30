@@ -199,6 +199,59 @@ footer {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
+/* vehicle view styling */
+.vehicle-detail {
+  padding: 20px;
+}
+.vehicle-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.vehicle-image {
+  flex:100%;
+  padding: 10px;
+}
+.vehicle-image img {
+  width: 100%; 
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.vehicle-info {
+  flex: 100%;
+}
+
+.vehicle-actions {
+  flex: 100%;
+}
+
+.vehicle-actions button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #1b6e1e;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.vehicle-actions button:hover {
+  background-color: #3f3f3f;
+}
+
+.vehicle-actions p {
+  margin-top: 10px;
+}
+
+.vehicle-info p,
+.vehicle-actions p {
+  word-wrap: break-word;
+}
+
 
 /* Media Queries for Larger Screens */
 @media screen and (min-width: 768px) {
@@ -241,8 +294,7 @@ footer {
   .hero {
     padding: 4rem;
   }
-/* ----------------- classification view styling -------------*/
-  /* Styling the grid container */
+/* classification view styling*/
   #inv-display {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -278,22 +330,25 @@ footer {
   }
 
   /* Vehicle name styling */
-  .namePrice h2 {
-    font-size: large;
-    margin: 10px 0;
+  .vehicle-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
-
-  .namePrice h2 a {
-    text-decoration: none;
-    color: #000000;
+  .vehicle-image {
+    flex: 0 0 50%;
   }
-  .namePrice h2 a:hover {
-    color: #005326;
+  .vehicle-image img {
+    width: 100%; 
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
   }
-  .namePrice span {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #001d87;
+  .vehicle-info {
+    flex: 0 0 40%;
   }
-
+  
+  .vehicle-actions {
+    flex: 0 0 40%;
+  }
 }
