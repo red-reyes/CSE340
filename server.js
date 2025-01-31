@@ -7,7 +7,8 @@
  * Require Statements
  *************************/
 // Unit 4, Require the Session package and DB connection
-const session = require("express-session")
+
+const session = require("express-session");
 const pool = require('./database/')
 
 const baseController = require("./controllers/baseController")
@@ -39,7 +40,6 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
-
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -53,18 +53,18 @@ app.use(express.static("public")); // Serve static files
 /* ***********************
  * Routes
  *************************/
+// Index Routes
 app.get("/", utilities.handleErrors(baseController.buildHome));
 
-// Index routes
-app.get("/", baseController.buildHome);
-
 // Inventory routes
-app.use('inventory', inventoryRoute);
 app.use('/inv', utilities.handleErrors(inventoryRoute));
+
+// Account routes
+app.use('/account', utilities.handleErrors(require("./routes/accountRoute")));
 
 // File Not Found Route - must be last route in list
 app.use(async(req, res, next) => {
-  next({ status: 404, message: "Sorry, we appear to have lost that page. 😔" });
+  next({status: 404, message: "Sorry, we appear to have lost that page. 😔"});
 });
 
 
@@ -72,7 +72,7 @@ app.use(async(req, res, next) => {
 * Express Error Handler
 * Place after all other middleware
 *************************/
-app.use(async (err, req, res, next) => {
+app.use(async (err, req, res,) => {
   let nav = await utilities.getNav();
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
   const message = err.status === 404 

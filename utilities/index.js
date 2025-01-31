@@ -1,6 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
 
+
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -55,6 +56,24 @@ Util.buildClassificationGrid = async function(data){
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
+}
+
+/* **************************************
+* Build the account login view HTML
+* ************************************ */
+Util.buildLoginView = function() {
+  let loginView = `
+    <form id="loginForm" action="/account/login" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      
+      <button type="submit">Login</button>
+    </form>
+  `;
+  return loginView;
 }
 
 /* ****************************************
