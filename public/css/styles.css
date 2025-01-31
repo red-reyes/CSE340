@@ -12,8 +12,8 @@ h1{
 }
 
 body{
-  background-image: url('images/site/checkerboard.jpg');
-  background-size: cover; 
+  background-image: url('/images/site/small_check.jpg');
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   margin: 0;
@@ -23,7 +23,6 @@ body{
 
 body img{
   width: 100%;
-  height: 100vh;
   object-fit: cover;
   padding: 0;
   margin: 0;
