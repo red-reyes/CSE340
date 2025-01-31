@@ -279,6 +279,13 @@ h2 {
     margin-bottom: 15px;
 }
 
+.form-group p{
+  color: white;
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px 0;
+  font-style: italic;
+}
 .form-group label {
   display: flex;
   width: 60%;
@@ -298,7 +305,7 @@ h2 {
 }
 
 button {
-  display: flex;
+  display: block;
   width: 60%;
   margin: 0 auto;
   padding: 10px;
