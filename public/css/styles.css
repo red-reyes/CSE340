@@ -314,7 +314,12 @@ button {
 button:hover {
   background-color: #025dbe;
 }
-
+.account-container a{
+  color: rgb(193, 234, 236);
+}
+.account-container a:hover{
+  color: yellow;
+}
 /* Media Queries for Larger Screens */
 @media screen and (min-width: 768px) {
   .hero-content h1{
