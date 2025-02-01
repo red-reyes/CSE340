@@ -276,7 +276,8 @@ h2 {
 }
 
 .form-group {
-    margin-bottom: 15px;
+  margin: 0 auto;
+  margin-bottom: 15px;
 }
 
 .form-group p{
@@ -329,6 +330,25 @@ button:hover {
 .account-container a:hover{
   color: yellow;
 }
+/* dropdown classification list */
+
+.classification-group, .description-group {
+  width: 60%;
+  margin: 0 auto;
+  font-style: italic;
+  padding: 10px;
+}
+#classification {
+  width: 100%;
+  margin: 0 auto;
+  font-style: italic;
+  padding: 10px;
+}
+
+#description {
+  width: 100%;
+}
+
 /* Media Queries for Larger Screens */
 @media screen and (min-width: 768px) {
   .hero-content h1{

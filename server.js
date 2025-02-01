@@ -21,7 +21,6 @@ const app = express();
 const inventoryRoute = require('./routes/inventoryRoute');
 const bodyParser = require('body-parser')
 
-
 /* ***********************
  * Middleware
  * ************************/
@@ -66,6 +65,12 @@ app.use('/inv', utilities.handleErrors(inventoryRoute));
 
 // Account routes
 app.use('/account', utilities.handleErrors(require("./routes/accountRoute")));
+
+// Add Classification route 
+app.use('/add-classification', utilities.handleErrors(require("./routes/inventoryRoute")));
+
+// Add new vehicle
+app.use('add-inventory', utilities.handleErrors(require("./routes/inventoryRoute")));
 
 // File Not Found Route - must be last route in list
 app.use(async(req, res, next) => {

@@ -64,4 +64,36 @@ invCont.buildInventoryIndex = async (req, res, next) => {
   }
 }
 
+/* ***************************
+ *  Build add classification view
+ * ************************** */
+invCont.buildAddClassification = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+    res.render("./inventory/add-classification", {
+      title: "Add New Classification",
+      nav
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/* ***************************
+ *  Build add inventory view
+ * ************************** */
+invCont.buildAddInventory = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+    const classifications = await invModel.getClassifications();
+    res.render("./inventory/add-inventory", {
+      title: "Add New Vehicle",
+      nav,
+      classifications
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = invCont
