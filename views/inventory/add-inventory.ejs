@@ -21,15 +21,15 @@
         </div>
         <div class="form-group">
             <label for="make">Make:</label>
-            <input type="text" id="make" name="make" value="<%= typeof make !== 'undefined' ? make : '' %>" required>
+            <input type="text" id="make" name="make" value="<%= typeof make !== 'undefined' ? make : '' %>" placeholder="Min of 3 Characters" required>
         </div>
         <div class="form-group">
             <label for="model">Model:</label>
-            <input type="text" id="model" name="model" value="<%= typeof model !== 'undefined' ? model : '' %>" required>
+            <input type="text" id="model" name="model" value="<%= typeof model !== 'undefined' ? model : '' %>" placeholder="Min of 3 Characters" required>
         </div>
         <div class="form-group">
             <label for="year">Year:</label>
-            <input type="number" id="year" name="year" value="<%= typeof year !== 'undefined' ? year : '' %>" required>
+            <input type="number" id="year" name="year" value="<%= typeof year !== 'undefined' ? year : '' %>" placeholder="4-digit year" required>
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
@@ -47,15 +47,15 @@
         </div>
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="number" id="price" name="price" value="<%= typeof price !== 'undefined' ? price : '' %>" required>
+            <input type="number" id="price" name="price" value="<%= typeof price !== 'undefined' ? price : '' %>" placeholder="decimal or integer" required>
         </div>
         <div class="form-group">
             <label for="miles">Miles:</label>
-            <input type="number" id="miles" name="miles" value="<%= typeof miles !== 'undefined' ? miles : '' %>" required>
+            <input type="number" id="miles" name="miles" value="<%= typeof miles !== 'undefined' ? miles : '' %>" placeholder="digits only" required>
         </div>
         <div class="form-group">
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" value="<%= typeof color !== 'undefined' ? color : '' %>" required>
+            <input type="text" id="color" name="color" value="<%= typeof color !== 'undefined' ? color : '' %>" placeholder="Min of 3 characters" required>
         </div>
         <button type="submit">Add Vehicle</button>
     </form>
