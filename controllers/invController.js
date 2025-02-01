@@ -14,37 +14,48 @@ invCont.triggerError = (req, res, next) => {
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
-  const classification_id = req.params.classificationId
-  const data = await invModel.getInventoryByClassificationId(classification_id)
-  const grid = await utilities.buildClassificationGrid(data)
-  let nav = await utilities.getNav()
-  const className = data[0].classification_name
-  res.render("./inventory/classification", {
-    title: className + " vehicles",
-    nav,
-    grid,
-  })
+  try {
+    const classification_id = req.params.classificationId
+    const data = await invModel.getInventoryByClassificationId(classification_id)
+    const grid = await utilities.buildClassificationGrid(data)
+    let nav = await utilities.getNav()
+    const className = data[0].classification_name
+    res.render("./inventory/classification", {
+      title: className + " vehicles",
+      nav,
+      grid,
+      errors: null,
+    })
+  } catch (error) {
+    next(error)
+  }
 }
+
 // vehicle details
 invCont.buildByVehicleId = async function (req, res, next) {
-  const vehicle_id = req.params.vehicleId;
-  const data = await invModel.getVehicleById(vehicle_id);
-  let nav = await utilities.getNav();
+  try {
+    const vehicle_id = req.params.vehicleId;
+    const data = await invModel.getVehicleById(vehicle_id);
+    let nav = await utilities.getNav();
 
-  if (!data) {
-    res.status(404).render("errors/error", {
-      title: "Vehicle Not Found",
-      message: "Sorry, we couldn't find that vehicle.",
-      nav
+    if (!data) {
+      res.status(404).render("errors/error", {
+        title: "Vehicle Not Found",
+        message: "Sorry, we couldn't find that vehicle.",
+        nav,
+        errors: null,
+      });
+      return;
+    }
+
+    res.render("./inventory/vehicle-detail", {
+      title: `${data.inv_make} ${data.inv_model}`,
+      nav,
+      vehicle: data
     });
-    return;
+  } catch (error) {
+    next(error)
   }
-
-  res.render("./inventory/vehicle-detail", {
-    title: `${data.inv_make} ${data.inv_model}`,
-    nav,
-    vehicle: data
-  });
 };
 
 /* ***************************
@@ -57,10 +68,11 @@ invCont.buildInventoryIndex = async (req, res, next) => {
     res.render("./inventory/index", {
       title: "Vehicle Management",
       nav,
-      inventory: data
+      inventory: data,
+      errors: null,
     });
   } catch (error) {
-    next(error);
+    next(error) 
   }
 }
 
@@ -72,10 +84,11 @@ invCont.buildAddClassification = async (req, res, next) => {
     let nav = await utilities.getNav();
     res.render("./inventory/add-classification", {
       title: "Add New Classification",
-      nav
+      nav,
+      errors: null,
     });
   } catch (error) {
-    next(error);
+    next(error) 
   }
 }
 
@@ -89,10 +102,11 @@ invCont.buildAddInventory = async (req, res, next) => {
     res.render("./inventory/add-inventory", {
       title: "Add New Vehicle",
       nav,
-      classifications
+      classifications,
+      errors: null,
     });
   } catch (error) {
-    next(error);
+    next(error) 
   }
 }
 
