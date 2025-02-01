@@ -9,17 +9,17 @@
 // Unit 4, Require the Session package and DB connection
 
 const session = require("express-session");
-const pool = require('./database/')
+const pool = require('./database/');
 
-const baseController = require("./controllers/baseController")
+const baseController = require("./controllers/baseController");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const dotenv = require("dotenv");
 dotenv.config(); // Load environment variables
-const utilities = require("./utilities");
+const utilities = require("./utilities/");
 const app = express();
 const inventoryRoute = require('./routes/inventoryRoute');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 /* ***********************
  * Middleware
@@ -77,16 +77,16 @@ app.use(async(req, res, next) => {
   next({status: 404, message: "Sorry, we appear to have lost that page. 😔"});
 });
 
-
 /* ***********************
 * Express Error Handler
 * Place after all other middleware
 *************************/
-app.use(async (err, req, res,) => {
+app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav();
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  
   const message = err.status === 404 
-    ? err.message 
+    ? err.message
     : 'Oh no! There was a crash. Maybe try a different route?';
   
   res.status(err.status || 500).render("errors/error", {
