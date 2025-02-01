@@ -21,6 +21,7 @@ const app = express();
 const inventoryRoute = require('./routes/inventoryRoute');
 const bodyParser = require('body-parser')
 
+
 /* ***********************
  * Middleware
  * ************************/

@@ -37,4 +37,14 @@ async function getVehicleById(vehicle_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById};
+// fetch all inventory items
+async function getAllInventory() {
+  try {
+    const data = await pool.query("SELECT * FROM public.inventory ORDER BY inv_id");
+    return data.rows;
+  } catch (error) {
+    console.error("getAllInventory error " + error);
+  }
+}
+
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, getAllInventory};

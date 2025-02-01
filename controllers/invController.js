@@ -47,4 +47,21 @@ invCont.buildByVehicleId = async function (req, res, next) {
   });
 };
 
+/* ***************************
+ *  Build inv/index.js view
+ * ************************** */
+invCont.buildInventoryIndex = async (req, res, next) => {
+  try {
+    const data = await invModel.getAllInventory();
+    let nav = await utilities.getNav();
+    res.render("./inventory/index", {
+      title: "Vehicle Management",
+      nav,
+      inventory: data
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = invCont

@@ -323,6 +323,8 @@ button:hover {
 }
 .account-container a{
   color: rgb(193, 234, 236);
+  text-align: center;
+  padding: 10px;
 }
 .account-container a:hover{
   color: yellow;

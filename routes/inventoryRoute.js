@@ -9,6 +9,9 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 // Route to build vehicle details view
 router.get("/detail/:vehicleId", invController.buildByVehicleId);
 
+// Route to build inv/index view
+router.get("/", invController.buildInventoryIndex);
+
 // Intentional error route to trigger 500 error
 router.get("/error", invController.triggerError);
 

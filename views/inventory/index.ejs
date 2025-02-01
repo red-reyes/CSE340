@@ -1,0 +1,10 @@
+<div class="account-container">
+    <% if (typeof flashMessage !== 'undefined') { %>
+        <div class="flash-message">
+            <%= flashMessage %>
+        </div>
+    <% } %>
+    <h1><%= title %></h1>
+    <a href="/inv/add-classification">Add New Classification</a>
+    <a href="/inv/add-inventory">Add Inventory</a>
+</div>
