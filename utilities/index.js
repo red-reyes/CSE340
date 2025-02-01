@@ -76,6 +76,56 @@ Util.buildLoginView = function() {
   return loginView;
 }
 
+/* **************************************
+* Build the add classification view HTML
+* ************************************ */
+Util.buildAddClassificationView = function() {
+  let addClassificationView = `
+    <form id="addClassificationForm" action="/classification/add" method="POST">
+      <label for="classificationName">Classification Name:</label>
+      <input type="text" id="classificationName" name="classificationName" required>
+      
+      <button type="submit">Add Classification</button>
+    </form>
+  `;
+  return addClassificationView;
+}
+
+// 
+/* **************************************
+* Build the add inventory view HTML
+* ************************************ */
+Util.buildAddInventoryView = function() {
+  let addInventoryView = `
+    <form id="addInventoryForm" action="/inventory/add" method="POST">
+      <label for="invMake">Make:</label>
+      <input type="text" id="invMake" name="invMake" required>
+      
+      <label for="invModel">Model:</label>
+      <input type="text" id="invModel" name="invModel" required>
+      
+      <label for="invYear">Year:</label>
+      <input type="number" id="invYear" name="invYear" required>
+      
+      <label for="invDescription">Description:</label>
+      <textarea id="invDescription" name="invDescription" required></textarea>
+      
+      <label for="invPrice">Price:</label>
+      <input type="number" id="invPrice" name="invPrice" required>
+      
+      <label for="invMiles">Miles:</label>
+      <input type="number" id="invMiles" name="invMiles" required>
+      
+      <label for="invColor">Color:</label>
+      <input type="text" id="invColor" name="invColor" required>
+      
+      <button type="submit">Add Inventory</button>
+    </form>
+  `;
+  return addInventoryView;
+}
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

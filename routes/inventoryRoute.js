@@ -21,5 +21,10 @@ router.get("/add-inventory", invController.buildAddInventory);
 // Intentional error route to trigger 500 error
 router.get("/error", invController.triggerError);
 
+// Error handling middleware
+router.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 module.exports = router;
