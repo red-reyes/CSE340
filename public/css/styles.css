@@ -262,8 +262,9 @@ footer {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #023b6a;
 }
-.account-container h2{
+.account-container h1{
   color: white;
+  text-align: center;
 }
 .flash-message {
     color: red;
