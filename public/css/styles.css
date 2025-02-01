@@ -13,8 +13,9 @@ h1{
 
 body{
   background-image: url('/images/site/small_check.jpg');
+  background-size:contain;
+  background-attachment:fixed;
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
   margin: 0;
   padding: 0;
