@@ -1,5 +1,9 @@
   <!-- Main Content -->
-  <%- messages() %>
+  <% if (typeof flashMessage !== 'undefined') { %>
+    <div class="flash-message">
+        <%= flashMessage %>
+    </div>
+<% } %>
   <div id="wrapper">  
      <section class="hero">
       <img src="images/vehicles/delorean.jpg" alt="CSE Motors" class="hero-image">
