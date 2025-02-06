@@ -20,7 +20,7 @@ const utilities = require("./utilities/");
 const app = express();
 const inventoryRoute = require('./routes/inventoryRoute');
 const bodyParser = require('body-parser');
-
+const cookieParser = require("cookie-parser");
 /* ***********************
  * Middleware
  * ************************/
@@ -43,6 +43,8 @@ app.use(function(req, res, next){
 })
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true})) //for parsing application/x-www-form-urlencoded
+// Unit 5
+app.use(cookieParser())
 
 /* ***********************
  * View Engine and Templates
@@ -71,6 +73,8 @@ app.use('/add-classification', utilities.handleErrors(require("./routes/inventor
 
 // Add new vehicle
 app.use('add-inventory', utilities.handleErrors(require("./routes/inventoryRoute")));
+
+// 
 
 // File Not Found Route - must be last route in list
 app.use(async(req, res, next) => {
