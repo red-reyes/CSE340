@@ -5,7 +5,9 @@
         </div>
     <% } %>
     <h1><%= title %></h1>
-    <form action="/inventory/add" method="POST" onsubmit="return validateForm()">
+    
+    <form id="add-inventory-form" action="/inventory/add-classification" method="POST">
+
         <div class="form-group">
             <label for="classification">Classification:</label>
         </div>
@@ -20,22 +22,22 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="make">Make:</label>
-            <input type="text" id="make" name="make" value="<%= typeof make !== 'undefined' ? make : '' %>" placeholder="Min of 3 Characters" required>
+            <label for="inv_make">Make:</label>
+            <input type="text" id="inv_make" name="inv_make" value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>" placeholder="Min of 3 Characters" required>
         </div>
         <div class="form-group">
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model" value="<%= typeof model !== 'undefined' ? model : '' %>" placeholder="Min of 3 Characters" required>
+            <label for="inv_model">Model:</label>
+            <input type="text" id="inv_model" name="inv_model" value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>" placeholder="Min of 3 Characters" required>
         </div>
         <div class="form-group">
-            <label for="year">Year:</label>
-            <input type="number" id="year" name="year" value="<%= typeof year !== 'undefined' ? year : '' %>" placeholder="4-digit year" required>
+            <label for="inv_year">Year:</label>
+            <input type="number" id="inv_year" name="inv_year" value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>" placeholder="4-digit year" required>
         </div>
         <div class="form-group">
-            <label for="description">Description:</label>
+            <label for="inv_description">Description:</label>
         </div>
         <div class="description-group">
-            <textarea id="description" name="description" required><%= typeof description !== 'undefined' ? description : '' %></textarea>
+            <textarea id="inv_description" name="inv_description" required><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
         </div>
         <div class="form-group">
             <label for="imagePath">Image Path:</label>
@@ -47,31 +49,16 @@
         </div>
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="number" id="price" name="price" value="<%= typeof price !== 'undefined' ? price : '' %>" placeholder="decimal or integer" required>
+            <input type="number" id="inv_price" name="inv_price" value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>" placeholder="decimal or integer" required>
         </div>
         <div class="form-group">
             <label for="miles">Miles:</label>
-            <input type="number" id="miles" name="miles" value="<%= typeof miles !== 'undefined' ? miles : '' %>" placeholder="digits only" required>
+            <input type="number" id="inv_miles" name="inv_miles" value="<%= typeof inv_miles !== 'undefined' ? inv_miles : '' %>" placeholder="digits only" required>
         </div>
         <div class="form-group">
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" value="<%= typeof color !== 'undefined' ? color : '' %>" placeholder="Min of 3 characters" required>
+            <input type="text" id="inv_color" name="inv_color" value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>" placeholder="Min of 3 characters" required>
         </div>
         <button type="submit">Add Vehicle</button>
     </form>
 </div>
-<script>
-    function validateForm() {
-        let isValid = true;
-        const inputs = document.querySelectorAll('input[required], select[required]');
-        inputs.forEach(input => {
-            if (!input.value) {
-                isValid = false;
-                input.classList.add('error');
-            } else {
-                input.classList.remove('error');
-            }
-        });
-        return isValid;
-    }
-</script>
