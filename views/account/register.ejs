@@ -1,21 +1,10 @@
 <div class="account-container">
-    <% if (title) { %>
-        <h1><%= title %></h1>
-        <% } else {res.redirect('/') } %>
-        
-        <%- messages() %>
-        
-        <% if (errors) { %>
-            <ul class="notice">
-                <% errors.array().forEach(error => { %>
-                    <li><%= error.msg %></li>
-                <% }) %>
-            </ul>
-        <% } %>
-        
-        <% if (typeof flashMessage !== 'undefined') { %>
-            <div class="flash-message"><%= flashMessage %></div>
-        <% } %>
+    <% if (typeof flashMessage !== 'undefined') { %>
+        <div class="flash-message">
+            <%= flashMessage %>
+        </div>
+    <% } %>
+    <h1><%= title %></h1>
     <form action="account/register" method="POST">
         <div class="form-group">
             <label for="account_firstName">First Name:</label>
