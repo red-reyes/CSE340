@@ -11,7 +11,7 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:vehicleId", invController.buildByVehicleId);
 
 // Route to build inv/index view
-router.get("/", invController.buildInventoryIndex);
+router.get("/", invController.buildManagementView);
 
 // Route to build add classification view
 router.get("/add-classification", invController.buildAddClassification);
@@ -24,6 +24,13 @@ router.get("/add-inventory", invController.buildAddInventory);
 
 // Process Add Inventory Form
 router.post("/add-inventory", utilities.handleErrors(invController.addInventory))
+
+// Unite 5 Selec inv item activity
+router.get(
+    "/getInventory/:classification_id",
+    (req, res, next) => utilities.checkAccountType(req, res, next),
+    utilities.handleErrors(invController.getInventoryJSON)
+);
 
 // Intentional error route to trigger 500 error
 router.get("/error", invController.triggerError);

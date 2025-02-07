@@ -25,8 +25,13 @@ router.post(
     utilities.handleErrors(accountController.registerAccount)
 );
 
-// Deliver account management view
-router.get('/', utilities.handleErrors(accountController.buildManage));
+// Unit 5 Deliver account management view *******************
+// JWT Authorization Activity
+// router.get(
+//     '/', 
+//     utilities.checkLogin,
+//     utilities.handleErrors(accountController.buildManage)
+// );
 
 
 module.exports = router;

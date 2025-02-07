@@ -58,23 +58,37 @@ invCont.buildByVehicleId = async function (req, res, next) {
   }
 };
 
+// /* ***************************
+//  *  Build inv/index.js view
+//  * ************************** */
+// invCont.buildInventoryIndex = async (req, res, next) => {
+//  try {
+//   const data = await invModel.getAllInventory();
+//   let nav = await utilities.getNav();
+//   res.render("./inventory/manage", {
+//     title: "Vehicle Management",
+//     nav,
+//     inventory: data,
+//     errors: null,
+//   });
+//   } catch (error) {
+//     next(error) 
+//    }
+//   }
+
 /* ***************************
- *  Build inv/index.js view
+ *  Build vehicle management view
  * ************************** */
-invCont.buildInventoryIndex = async (req, res, next) => {
-  try {
-    const data = await invModel.getAllInventory();
-    let nav = await utilities.getNav();
-    res.render("./inventory/index", {
-      title: "Vehicle Management",
-      nav,
-      inventory: data,
-      errors: null,
-    });
-  } catch (error) {
-    next(error) 
-  }
-}
+invCont.buildManagementView = async function(req, res, next) {
+  let nav = await utilities.getNav();
+  const classificationSelect = await utilities.buildClassificationList()
+  res.render("./inventory/manage", {
+    title: "Vehicle Management",
+    nav,
+    errors: null,
+    classificationSelect,
+  }); 
+};
 
 /* ***************************
  *  Build add classification view
@@ -198,6 +212,20 @@ invCont.addInventory = async (req, res, next) => {
     req.flash("error", "An error occurred while adding the vehicle.");
     return res.redirect("/inventory/add-inventory");
   }
+};
+
+// Unit 5, Select Inv Item Activity
+// Return Inventory by Classification as JSON
+
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const data = await invModel.getInventoryByClassificationId
+  (classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  }else {
+    next(new Error("No data returned"))
+  };
 };
 
 module.exports = invCont

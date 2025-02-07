@@ -20,7 +20,6 @@ const utilities = require("./utilities/");
 const app = express();
 const bodyParser = require('body-parser');
 
-
 /* ***********************
  * Middleware
  * ************************/
@@ -43,8 +42,9 @@ app.use(function(req, res, next){
 })
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true})) //for parsing application/x-www-form-urlencoded
+
 // Unit 5 *****ISSUE WITH THIS**********************
-app.use(utilities.checkJWTToken)
+// app.use(utilities.checkJWTToken) 
 
 /* ***********************
  * View Engine and Templates
