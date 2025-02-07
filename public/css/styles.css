@@ -267,6 +267,11 @@ footer {
   color: white;
   text-align: center;
 }
+.account-container p{
+  color: rgb(238, 255, 0);
+  text-align: center;
+}
+
 .flash-message {
     color: red;
     margin-bottom: 15px;
@@ -279,6 +284,25 @@ h2 {
 .form-group {
   margin: 0 auto;
   margin-bottom: 15px;
+  border: none;
+}
+
+fieldset {
+  border: none;
+}
+
+.account-container button {
+  display: block;
+  width: 60%;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #00780c;
+  border: 1pt solid white;
+  border-radius: 3px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .form-group p{
@@ -306,21 +330,7 @@ h2 {
   border-radius: 3px;
 }
 
-button {
-  display: block;
-  width: 60%;
-  margin: 0 auto;
-  padding: 10px;
-  background-color: #00780c;
-  border: 1pt solid white;
-  border-radius: 3px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-}
-
-button:hover {
+.account-container button:hover {
   background-color: #025dbe;
 }
 .account-container a{

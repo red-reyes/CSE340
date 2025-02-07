@@ -7,7 +7,7 @@ const validate = {};
 /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
-validate.registationRules = () => {
+validate.registrationRules = () => {
     return [
       // firstname is required and must be string
       body("account_firstname")
@@ -16,7 +16,7 @@ validate.registationRules = () => {
         .notEmpty()
         .isString()
         .isLength({ min: 1 })
-        .withMessage("Please provide a first name."), // on error this message is sent.
+        .withMessage("Please provide a first name."),
   
       // lastname is required and must be string
       body("account_lastname")
@@ -27,18 +27,18 @@ validate.registationRules = () => {
         .isLength({ min: 1 })
         .withMessage("Please provide a last name."), // on error this message is sent.
   
-      // valid email is required and cannot already exist in the DB
+      /// valid email is required and cannot already exist in the database
       body("account_email")
-        .trim()
-        .isEmail()
-        .normalizeEmail() // refer to validator.js docs
-        .withMessage("A valid email is required.")
-        .custom(async (account_email) => {
-            const emailExists = await accountModel.checkExistingEmail(account_email)
-            if (emailExists){
-            throw new Error("Email exists. Please log in or use different email")
-            }
-        }),
+      .trim()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email)
+        if (emailExists){
+          throw new Error("Email exists. Please log in or use different email")
+        }
+      }),
   
       // password is required and must be strong password
       body("account_password")
@@ -76,11 +76,12 @@ validate.loginRules = () => {
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body;
-  const errors = validationResult(req);
+  let errors = []
+  errors = validationResult(req)
   if (!errors.isEmpty()) {
-    const nav = await utilities.getNav();
+    let nav = await utilities.getNav();
     res.render('account/register', {
-      errors: errors.array(),
+      errors,
       title: 'Registration',
       nav,
       account_firstname,
@@ -97,11 +98,12 @@ validate.checkRegData = async (req, res, next) => {
  * ***************************** */
 validate.checkLoginData = async (req, res, next) => {
   const { account_email } = req.body;
-  const errors = validationResult(req);
+  let errors = [];
+  errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const nav = await utilities.getNav();
+    let nav = await utilities.getNav();
     res.render('account/login', {
-      errors: errors.array(),
+      errors,
       title: 'Login',
       nav,
       account_email,

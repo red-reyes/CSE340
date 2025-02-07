@@ -17,7 +17,7 @@ router.get('/', utilities.handleErrors(accountController.buildManage));
 // Process Registration
 router.post(
     '/register',
-    regValidate.registationRules(),
+    regValidate.registrationRules(),
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
 );

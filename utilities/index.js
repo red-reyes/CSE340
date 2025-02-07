@@ -1,9 +1,6 @@
 const invModel = require("../models/inventory-model")
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
 
 const Util = {}
-
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -39,7 +36,7 @@ Util.buildClassificationGrid = async function(data){
       grid += '<li>'
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-      + 'details"><img src="' + vehicle.inv_thumbnail 
+      + ' details"><img src="' + vehicle.inv_thumbnail 
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
       +' on CSE Motors" /></a>'
       grid += '<div class="namePrice">'
@@ -86,8 +83,8 @@ Util.buildLoginView = function() {
 Util.buildAddClassificationView = function() {
   let addClassificationView = `
     <form id="addClassificationForm" action="/classification/add" method="POST">
-      <label for="classificationName">Classification Name:</label>
-      <input type="text" id="classificationName" name="classificationName" required>
+      <label for="classification_name">Classification Name:</label>
+      <input type="text" id="classification_name" name="classification_name" required>
       
       <button type="submit">Add Classification</button>
     </form>
@@ -95,40 +92,60 @@ Util.buildAddClassificationView = function() {
   return addClassificationView;
 }
 
-// 
+/* **************************************
+* Build the classificaction list
+* ************************************ */
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected "
+    }
+    classificationList += ">" + row.classification_name + "</option>"
+  })
+  classificationList += "</select>"
+  return classificationList
+}
+
 /* **************************************
 * Build the add inventory view HTML
 * ************************************ */
 Util.buildAddInventoryView = function() {
   let addInventoryView = `
     <form id="addInventoryForm" action="/inventory/add" method="POST">
-      <label for="invMake">Make:</label>
-      <input type="text" id="invMake" name="invMake" required>
+      <label for="inv_make">Make:</label>
+      <input type="text" id="inv_make" name="inv_make" required>
       
-      <label for="invModel">Model:</label>
-      <input type="text" id="invModel" name="invModel" required>
+      <label for="inv_model">Model:</label>
+      <input type="text" id="inv_model" name="inv_model" required>
       
-      <label for="invYear">Year:</label>
-      <input type="number" id="invYear" name="invYear" required>
+      <label for="inv_year">Year:</label>
+      <input type="number" id="inv_year" name="inv_year" required>
       
-      <label for="invDescription">Description:</label>
-      <textarea id="invDescription" name="invDescription" required></textarea>
+      <label for="inv_description">Description:</label>
+      <textarea id="inv_description" name="inv_description" required></textarea>
       
-      <label for="invPrice">Price:</label>
-      <input type="number" id="invPrice" name="invPrice" required>
+      <label for="inv_price">Price:</label>
+      <input type="number" id="inv_price" name="inv_price" required>
       
-      <label for="invMiles">Miles:</label>
-      <input type="number" id="invMiles" name="invMiles" required>
+      <label for="inv_miles">Miles:</label>
+      <input type="number" id="inv_miles" name="inv_miles" required>
       
-      <label for="invColor">Color:</label>
-      <input type="text" id="invColor" name="invColor" required>
+      <label for="inv_color">Color:</label>
+      <input type="text" id="inv_color" name="inv_color" required>
       
       <button type="submit">Add Inventory</button>
     </form>
   `;
   return addInventoryView;
 }
-
 
 /* ****************************************
  * Middleware For Handling Errors

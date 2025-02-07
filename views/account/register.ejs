@@ -1,30 +1,41 @@
 <div class="account-container">
-    <% if (typeof flashMessage !== 'undefined') { %>
-        <div class="flash-message">
-            <%= flashMessage %>
-        </div>
-    <% } %>
+    <% if (title) { %>
     <h1><%= title %></h1>
-    <form action="account/register" method="POST">
-        <div class="form-group">
-            <label for="account_firstName">First Name:</label>
-            <input type="text" id="account_firstName" name="account_firstName" required value="<%= locals.account_firstName %>">
-        </div>
-        <div class="form-group">
-            <label for="account_lastName">Last Name:</label>
-            <input type="text" id="account_lastName" name="account_lastName" required value="<%= locals.account_lastName %>">
-        </div>
-        <div class="form-group">
-            <label for="account_email">Email Address:</label>
-            <input type="email" id="account_email" name="account_email" required value="<%= locals.account_email%>">
-        </div>
-        <div class="form-group">
-            <label for="account_password">Password:</label>
-            <input type="password" id="account_password" name="account_password" required minlength="12" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)">
-            <p>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</p>
+    <% } else { res.redirect('/') } %>
+    
+    <%- messages() %>
+
+    <% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+    <% } %>
+    
+    <form id="registerForm" action="account/register" method="post">
+        <p>*All fields are required</p>
+        <fieldset>
+            <div class="form-group">
+                <label for="account_firstname">First Name:</label>
+                <input type="text" id="firstname" size="10" name="account_firstname" require value="<%= locals.account_firstname %>">
+            </div>
+            <div class="form-group">
+                <label for="account_lastname">Last Name:</label>
+                <input type="text" id="lastname" name="account_lastname" required value="<%= locals.account_lastname %>">
+            </div>
+            <div class="form-group">
+                <label for="account_email">Email Address:</label>
+                <input type="email" id="email" name="account_email" required value="<%= locals.account_email %>">
+            </div>
+            <div class="form-group">
+                <label for="account_password">Password:</label>
+                <input type="password" id="password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+                <p>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</p>
+            </div>
             <button type="button" onclick="togglePassword()">Show/Hide Password</button>
-        </div>
-        <button type="submit" style="text-align: center;">Register</button>
+            <button type="submit" style="text-align: center;">Register</button>
+        </fieldset>
     </form>
 </div>
 

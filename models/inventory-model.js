@@ -60,6 +60,27 @@ async function addClassification(classification_name) {
   }
 }
 
+// add multiple classifications
+async function addClassificationList(classificationList) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const queryText = `INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *`;
+    const results = [];
+    for (const classification_name of classificationList) {
+      const result = await client.query(queryText, [classification_name]);
+      results.push(result.rows[0]);
+    }
+    await client.query('COMMIT');
+    return results;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error("addClassificationList error " + error);
+  } finally {
+    client.release();
+  }
+}
+
 // add new vehicle
 
 async function addVehicle(vehicle) {
@@ -76,4 +97,5 @@ async function addVehicle(vehicle) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, getAllInventory, addClassification, addVehicle};
+
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, getAllInventory, addClassification, addClassificationList, addVehicle};
