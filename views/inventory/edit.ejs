@@ -1,0 +1,26 @@
+<div class="account-container"></div>
+    <h1><%= title %></h1>
+    <form action="/inventory/<%= vehicle.inv_id %>?_method=PUT" method="POST">
+        <div>
+            <label for="inv_make">Make:</label>
+            <input type="text" id="make" name="inv_make" value="<%= vehicle.inv_make %>" required>
+        </div>
+        <div>
+            <label for="inv_model">Model:</label>
+            <input type="text" id="model" name="inv_model" value="<%= vehicle.inv_model %>" required>
+        </div>
+        <div>
+            <label for="inv_year">Year:</label>
+            <input type="number" id="year" name="inv_year" value="<%= vehicle.inv_year %>" required>
+        </div>
+        <div>
+            <label for="inv_color">Color:</label>
+            <input type="text" id="color" name="inv_color" value="<%= vehicle.inv_color %>" required>
+        </div>
+        <div>
+            <label for="inv_price">Price:</label>
+            <input type="number" id="price" name="inv_price" value="<%= vehicle.inv_price %>" required>
+        </div>
+        <button type="submit">Update Vehicle</button>
+    </form>
+</div
