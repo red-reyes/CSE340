@@ -22,7 +22,7 @@ const bodyParser = require('body-parser');
 
 /* ***********************
  * Middleware
- * ************************/
+ ************************/
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -66,13 +66,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use('/inv', utilities.handleErrors(require("./routes/inventoryRoute")));
 
 // Account routes
-app.use('/account', utilities.handleErrors(require("./routes/accountRoute")));
-
-// Add Classification route 
-app.use('/add-classification', utilities.handleErrors(require("./routes/inventoryRoute")));
-
-// Add new vehicle
-app.use('add-inventory', utilities.handleErrors(require("./routes/inventoryRoute")));
+// app.use('/account', utilities.handleErrors(require("./routes/accountRoute")));
 
 // File Not Found Route - must be last route in list
 app.use(async(req, res, next) => {

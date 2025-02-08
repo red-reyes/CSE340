@@ -1,0 +1,70 @@
+<div class="account-container">
+    <% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    
+    <%- messages() %>
+
+    <% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+    <% } %>
+
+    <h2>Account Update</h2>
+    <form action="/account/update/<%= userData.id %>" method="post">
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" name="account_firstname" value="<%= locals.account_firstname %>" required>
+
+      <label for="lastname">Last Name:</label>
+      <input type="text" id="lastname" name="account_lastname" value="<%= locals.account_lastname %>" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="account_email" value="<%= locals.account_email %>" required>
+
+      <button type="submit">Update Account</button>
+    </form>
+</div>
+
+<div class="account-container">
+    <h2>Change Password</h2>
+    <p>Enter a new password to change your current password. Password must be at least 8 characters long and contain a mix of letters, numbers, and special characters.</p>
+
+    <form action="/account/change-password/<%= userData.id %>" method="post">
+      <label for="current_password">Current Password:</label>
+      <input type="password" id="current_password" name="account_password" required>
+
+      <label for="new_password">New Password:</label>
+      <input type="password" id="new_password" name="account_password" required>
+
+      <label for="confirm_password">Confirm New Password:</label>
+      <input type="password" id="confirm_password" name="account_password" required>
+
+      <button type="submit">Change Password</button>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+      const firstName = document.getElementById('first_name').value;
+      const lastName = document.getElementById('last_name').value;
+      const email = document.getElementById('email').value;
+      if (!firstName || !lastName || !email) {
+        alert('All fields are required.');
+        return false;
+      }
+      return true;
+    }
+
+    function validatePasswordForm() {
+      const newPassword = document.getElementById('new_password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+      if (newPassword !== confirmPassword) {
+        alert('New password and confirm password do not match.');
+        return false;
+      }
+      return true;
+    }
+  </script>

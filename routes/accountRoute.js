@@ -3,10 +3,11 @@ const express = require('express');
 const router = new express.Router();
 const accountController = require("../controllers/accountController");
 const utilities = require("../utilities");
-const regValidate = require('../utilities/account-validation')
+const regValidate = require('../utilities/account-validation');
 
 // Deliver login view
 router.get('/login', utilities.handleErrors(accountController.buildLogin));
+
 // Process the login attempt
 router.post(
     "/login",
@@ -17,6 +18,7 @@ router.post(
 
 // Deliver register view
 router.get('/register', utilities.handleErrors(accountController.buildRegister));
+
 // Process Registration
 router.post(
     '/register',
@@ -27,11 +29,39 @@ router.post(
 
 // Unit 5 Deliver account management view *******************
 // JWT Authorization Activity
-// router.get(
-//     '/', 
-//     utilities.checkLogin,
-//     utilities.handleErrors(accountController.buildManage)
-// );
+router.get(
+    '/', 
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.buildManage)
+);
+
+// Deliver account update view
+router.get(
+    '/update/:userId', 
+    utilities.checkLogin, 
+    utilities.handleErrors(accountController.buildUpdateAccount)
+);
+
+// Process account update
+router.post(
+    '/update/:userId', 
+    utilities.checkLogin, 
+    regValidate.updateAccountRules(),
+    regValidate.checkUpdateAccountData,
+    utilities.handleErrors(accountController.updateAccount)
+);
+
+// Process password change
+router.post(
+    '/change-password/:userId', 
+    utilities.checkLogin, 
+    regValidate.passwordChangeRules(),
+    regValidate.checkPasswordChangeData,
+    utilities.handleErrors(accountController.changePassword)
+);
+
+// Process logout
+router.get('/logout', utilities.handleErrors(accountController.logoutAccount));
 
 
 module.exports = router;

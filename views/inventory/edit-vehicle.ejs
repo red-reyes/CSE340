@@ -1,6 +1,6 @@
 <div class="account-container"></div>
     <h1><%= title %></h1>
-    <form action="/inventory/<%= vehicle.inv_id %>?_method=PUT" method="POST">
+    <form action="/inventory/<%= vehicle.inv_id %>" method="POST">
         <div>
             <label for="inv_make">Make:</label>
             <input type="text" id="make" name="inv_make" value="<%= vehicle.inv_make %>" required>

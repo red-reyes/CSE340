@@ -1,8 +1,7 @@
-// account controller
 const utilities = require('../utilities')
 const accountModel = require('../models/account-model');
 const bcrypt = require("bcryptjs")
-// const jwt = require("jsonwebtoken"); *******************
+const jwt = require("jsonwebtoken")
 require("dotenv").config();
 
 // deliver login view
@@ -28,9 +27,23 @@ async function buildRegister(req, res, next) {
 // deliver manage view
 async function buildManage(req, res, next) {
   let nav = await utilities.getNav()
-  res.render("account/index.ejs", {
+  const accountData = await accountModel.getAccountById(req.user.account_id)
+  res.render("account/manage", {
     title: "Account Management",
     nav,
+    accountData,
+    errors: null,
+  })
+}
+
+// deliver update view
+async function buildUpdateAccount(req, res, next) {
+  let nav = await utilities.getNav()
+  const accountData = await accountModel.getAccountById(req.params.userId)
+  res.render("account/update", {
+    title: "Update Account Information",
+    nav,
+    userData: accountData,
     errors: null,
   })
 }
@@ -41,49 +54,49 @@ async function buildManage(req, res, next) {
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
   const { 
-  account_firstname, 
-  account_lastname, 
-  account_email, 
-  account_password 
+    account_firstname, 
+    account_lastname, 
+    account_email, 
+    account_password 
   } = req.body
 
   // Hash the password before storing
   let hashedPassword
   try {
-  // regular password and cost (salt is generated automatically)
-  hashedPassword = await bcrypt.hashSync(account_password, 10)
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
   } catch (error) {
-  req.flash("notice", 'Sorry, there was an error processing the registration.')
-  res.status(500).render("account/register", {
-    title: "Registration",
-    nav,
-    errors: null,
-  })
+    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    res.status(500).render("account/register", {
+      title: "Registration",
+      nav,
+      errors: null,
+    })
   }
 
   const regResult = await accountModel.registerAccount(
-  account_firstname,
-  account_lastname,
-  account_email,
-  hashedPassword
+    account_firstname,
+    account_lastname,
+    account_email,
+    hashedPassword
   )
 
   if (regResult) {
-  req.flash(
-    "notice",
-    `Congratulations, you\'re registered ${account_firstname}. Please log in.`
-  )
-  res.status(201).render("account/login", {
-    title: "Login",
-    nav,
-  })
+    req.flash(
+      "notice",
+      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
+    )
+    res.status(201).render("account/login", {
+      title: "Login",
+      nav,
+    })
   } else {
-  req.flash("notice", "Sorry, the registration failed.")
-  res.status(501).render("account/register", {
-    title: "Registration",
-    nav,
-    errors: null,
-  })
+    req.flash("notice", "Sorry, the registration failed.")
+    res.status(501).render("account/register", {
+      title: "Registration",
+      nav,
+      errors: null,
+    })
   }
 }
 
@@ -139,7 +152,7 @@ async function manageAccount(req, res) {
     req.flash("notice", "Account not found.")
     return res.status(404).redirect("/account/login")
   }
-  res.render("account/index", {
+  res.render("account/manage", {
     title: "Manage Account",
     nav,
     accountData,
@@ -155,6 +168,12 @@ async function updateAccount(req, res) {
   const { account_firstname, account_lastname, account_email } = req.body
   const account_id = req.user.account_id
 
+  // Server-side validation
+  if (!account_firstname || !account_lastname || !account_email) {
+    req.flash('error', 'All fields are required.');
+    return res.redirect(`/account/update/${account_id}`);
+  }
+
   const updateResult = await accountModel.updateAccount(
     account_id,
     account_firstname,
@@ -167,8 +186,8 @@ async function updateAccount(req, res) {
     res.redirect("/account/")
   } else {
     req.flash("notice", "Sorry, the update failed.")
-    res.status(500).render("account/index", {
-      title: "Manage Account",
+    res.status(500).render("account/update", {
+      title: "Update Account",
       nav,
       errors: null,
     })
@@ -176,12 +195,53 @@ async function updateAccount(req, res) {
 }
 
 /* ****************************************
+ *  Process change password
+ * ************************************ */
+async function changePassword(req, res) {
+  const userId = req.params.userId;
+  const { current_password, new_password, confirm_password } = req.body;
+
+  if (new_password !== confirm_password) {
+    req.flash('error', 'New password and confirm password do not match.');
+    return res.redirect(`/account/update/${userId}`);
+  }
+
+  try {
+    // Verify current password and update to new password in the database
+    const accountData = await accountModel.getAccountById(userId);
+    if (!accountData || !await bcrypt.compare(current_password, accountData.account_password)) {
+      req.flash('error', 'Current password is incorrect.');
+      return res.redirect(`/account/update/${userId}`);
+    }
+
+    const hashedPassword = await bcrypt.hash(new_password, 10);
+    await accountModel.updatePassword(userId, hashedPassword);
+    req.flash('message', 'Password changed successfully.');
+    res.redirect(`/account/update/${userId}`);
+  } catch (error) {
+    req.flash('error', 'Failed to change password.');
+    res.redirect(`/account/update/${userId}`);
+  }
+}
+
+/* ****************************************
  *  Process logout
  * ************************************ */
-function logoutAccount(req, res) {
+async function logoutAccount(req, res) {
   res.clearCookie("jwt")
   req.flash("notice", "You have been logged out.")
   res.redirect("/account/login")
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, buildManage, manageAccount, updateAccount, logoutAccount }
+module.exports = { 
+  buildLogin,
+  buildRegister,
+  registerAccount,
+  loginAccount,
+  buildManage,
+  manageAccount,
+  updateAccount,
+  logoutAccount,
+  buildUpdateAccount,
+  changePassword
+}
