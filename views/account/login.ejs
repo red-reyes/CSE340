@@ -26,14 +26,3 @@
     </form>
     <p style="text-align: center; color:white">No Account? <a href="/account/register">Sign-up</a></p>
 </div>
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        var account_email = document.getElementById('email').value;
-        var account_password = document.getElementById('password').value;
-
-        if (!account_email || !account_password) {
-            event.preventDefault();
-            alert('Please fill in both email and password.');
-        }
-    });
-</script>

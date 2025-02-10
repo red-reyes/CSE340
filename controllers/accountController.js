@@ -27,11 +27,9 @@ async function buildRegister(req, res, next) {
 // deliver manage view
 async function buildManage(req, res, next) {
   let nav = await utilities.getNav()
-  const accountData = await accountModel.getAccountById(req.user.account_id)
   res.render("account/manage", {
     title: "Account Management",
     nav,
-    accountData,
     errors: null,
   })
 }
