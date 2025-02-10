@@ -13,12 +13,12 @@
     </ul>
     <% } %>
     
-    <form id="registerForm" action="account/register" method="post">
+    <form id="registerForm" action="/account/register" method="post" onsubmit="return validateForm()"></form>
         <p>*All fields are required</p>
         <fieldset>
             <div class="form-group">
                 <label for="account_firstname">First Name:</label>
-                <input type="text" id="firstname" size="10" name="account_firstname" require value="<%= locals.account_firstname %>">
+                <input type="text" id="firstname" size="10" name="account_firstname" required value="<%= locals.account_firstname %>">
             </div>
             <div class="form-group">
                 <label for="account_lastname">Last Name:</label>
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label for="account_password">Password:</label>
-                <input type="password" id="account_password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+                <input type="password" id="password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
                 <p>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</p>
             </div>
             <button type="button" onclick="togglePassword()">Show/Hide Password</button>
@@ -41,11 +41,31 @@
 
 <script>
 function togglePassword() {
-    var passwordField = document.getElementById("account_password");
+    var passwordField = document.getElementById("password");
     if (passwordField.type === "password") {
         passwordField.type = "text";
     } else {
         passwordField.type = "password";
     }
+}
+
+function validateForm() {
+    var account_firstname = document.getElementById("firstname").value;
+    var account_lastname = document.getElementById("lastname").value;
+    var account_email = document.getElementById("email").value;
+    var account_password = document.getElementById("password").value;
+
+    if (!account_firstname || !account_lastname || !account_email || !account_password) {
+        alert("All fields are required.");
+        return false;
+    }
+
+    var passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$/;
+    if (!passwordPattern.test(account_password)) {
+        alert("Password does not meet the requirements.");
+        return false;
+    }
+
+    return true;
 }
 </script>
