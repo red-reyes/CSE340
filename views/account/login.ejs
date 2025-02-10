@@ -28,10 +28,10 @@
 </div>
 <script>
     document.getElementById('loginForm').addEventListener('submit', function(event) {
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
+        var account_email = document.getElementById('email').value;
+        var account_password = document.getElementById('password').value;
 
-        if (!email || !password) {
+        if (!account_email || !account_password) {
             event.preventDefault();
             alert('Please fill in both email and password.');
         }
