@@ -110,7 +110,7 @@ invCont.buildAddInventory = async (req, res, next) => {
   }
 };
 
-// Add classification
+// Process Add classification
 invCont.addClassification = async (req, res, next) => {
   try {
     const { classification_name } = req.body;
@@ -138,7 +138,7 @@ invCont.addClassification = async (req, res, next) => {
   }
 };
 
-// add inventory
+// Process add new vehicle
 invCont.addInventory = async (req, res, next) => {
   try {
     const {
@@ -216,7 +216,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 };
 
 /* ***************************
- *  Build edit inventory view
+ *  Build edit/update a vehicle info
  * ************************** */
 invCont.editInventoryView = async function (req, res, next) {
   try {
@@ -225,7 +225,7 @@ invCont.editInventoryView = async function (req, res, next) {
     const itemData = await invModel.getInventoryById(inv_id);
     const classificationSelect = await utilities.buildClassificationList(itemData.classification_id);
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
-    res.render("./inventory/edit-inventory", {
+    res.render("./inventory/edit-vehicle", {
       title: "Edit " + itemName,
       nav,
       classificationSelect: classificationSelect,
@@ -267,19 +267,19 @@ invCont.updateInventoryItem = async (req, res, next) => {
     // Validate required fields
     if (!inv_id || !inv_make || !inv_model || !inv_year || !inv_price || !classification_id) {
       req.flash("error", "All required fields must be filled.");
-      return res.redirect(`/inventory/edit/${inv_id}`);
+      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
     }
 
     // Ensure year is a valid number
     if (isNaN(inv_year) || inv_year < 1886 || inv_year > new Date().getFullYear()) {
       req.flash("error", "Invalid vehicle year.");
-      return res.redirect(`/inventory/edit/${inv_id}`);
+      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
     }
 
     // Ensure price is a number
     if (isNaN(inv_price) || inv_price <= 0) {
       req.flash("error", "Price must be a valid number.");
-      return res.redirect(`/inventory/edit/${inv_id}`);
+      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
     }
 
     // Update in database
@@ -302,12 +302,12 @@ invCont.updateInventoryItem = async (req, res, next) => {
       return res.redirect("/inventory");
     } else {
       req.flash("error", "Failed to update vehicle.");
-      return res.redirect(`/inventory/edit/${inv_id}`);
+      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
     }
   } catch (error) {
     console.error("Error updating vehicle:", error);
     req.flash("error", "An error occurred while updating the vehicle.");
-    return res.redirect(`/inventory/edit/${inv_id}`);
+    return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
   }
 };
 
@@ -354,12 +354,12 @@ invCont.deleteInventoryItem = async (req, res, next) => {
       return res.redirect("/inventory");
     } else {
       req.flash("error", "Failed to delete vehicle.");
-      return res.redirect(`/inventory/delete/${inv_id}`);
+      return res.redirect(`/inventory/delete-cofirm/${inv_id}`);
     }
   } catch (error) {
     console.error("Error deleting vehicle:", error);
     req.flash("error", "An error occurred while deleting the vehicle.");
-    return res.redirect(`/inventory/delete/${inv_id}`);
+    return res.redirect(`/inventory/delete-confirm/${inv_id}`);
   }
 };
 

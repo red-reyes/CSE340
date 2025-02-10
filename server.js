@@ -15,10 +15,12 @@ const baseController = require("./controllers/baseController");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const dotenv = require("dotenv");
-dotenv.config(); // Load environment variables
+dotenv.config();
 const utilities = require("./utilities/");
 const app = express();
 const bodyParser = require('body-parser');
+
+
 
 /* ***********************
  * Middleware
@@ -43,7 +45,7 @@ app.use(function(req, res, next){
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true})) //for parsing application/x-www-form-urlencoded
 
-// Unit 5 *****ISSUE WITH THIS**********************
+// Unit 5 *****THIS IS GIVING ME ISSUE AS WELL**********************
 // app.use(utilities.checkJWTToken) 
 
 /* ***********************

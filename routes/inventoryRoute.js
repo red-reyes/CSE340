@@ -5,12 +5,12 @@ const invController = require("../controllers/invController");
 const utilities = require("../utilities");
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get("/type/:classification_id", invController.buildByClassificationId);
 
 // Route to build vehicle details view
-router.get("/detail/:vehicleId", invController.buildByVehicleId);
+router.get("/detail/:inv_id", invController.buildByVehicleId);
 
-// Route to build inv/index view
+// Route to build inv/manage view
 router.get("/", invController.buildManagementView);
 
 // Route to build add classification view
@@ -29,16 +29,16 @@ router.post("/add-inventory", utilities.handleErrors(invController.addInventory)
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
 // Route to get item id to edit
-router.get("/edit/:itemId", utilities.handleErrors(invController.editInventoryItem));
+router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryItem));
 
 // Process Edit Inventory Item Form
-router.post("/edit/:itemId", utilities.handleErrors(invController.editInventoryItem));
+router.post("/edit/:inv_id", utilities.handleErrors(invController.editInventoryItem));
 
 // Process Update Inventory Item Form
-router.post("/update/:itemId", utilities.handleErrors(invController.updateInventoryItem));
+router.post("/update/:inv_d", utilities.handleErrors(invController.updateInventoryItem));
 
 // Route to build delete confirmation view
-router.get("/delete-confirm/:itemId", utilities.handleErrors(invController.builddeleteInventoryItem));
+router.get("/delete-confirm/:inv_d", utilities.handleErrors(invController.builddeleteInventoryItem));
 
 // Intentional error route to trigger 500 error
 router.get("/error", invController.triggerError);
