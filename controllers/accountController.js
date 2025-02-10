@@ -39,7 +39,7 @@ async function buildManage(req, res, next) {
 // deliver update view
 async function buildUpdateAccount(req, res, next) {
   let nav = await utilities.getNav()
-  const accountData = await accountModel.getAccountById(req.params.userId)
+  const accountData = await accountModel.getAccountById(req.params.account_id)
   res.render("account/update", {
     title: "Update Account Information",
     nav,
@@ -198,7 +198,7 @@ async function updateAccount(req, res) {
  *  Process change password
  * ************************************ */
 async function changePassword(req, res) {
-  const userId = req.params.userId;
+  const userId = req.params.account_id;
   const { current_password, new_password, confirm_password } = req.body;
 
   if (new_password !== confirm_password) {
