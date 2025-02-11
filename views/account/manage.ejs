@@ -1,13 +1,12 @@
-<h1>Account Management</h1>
-<h2>Welcome <%= accountData.account_firstname %></h2>
-
-<% if (accountData.accountType === 'Client') { %>
-  <h2>Welcome Basic</h2>
-<% } else if (accountData.accountType === 'Employee' || accountData.accountType === 'Admin') { %>
-  <h2>Welcome Happy</h2>
-  <h3>Inventory Management</h3>
-  <p><a href="/inventory">Access Inventory Management</a></p>
-<% } %>
-
-<p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></p>
-  <p><a href="/account/update-password/<%= accountData.account_id %>">Update Password</a></p>
+<div class="account-container">
+  <h1>Account Management</h1>
+  <h2>Welcome <%= accountData.account_firstname %></h2>
+  <% if (accountData.account_type === 'Client') { %>
+    <h2>Welcome Basic</h2>
+  <% } else if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
+    <h2>Welcome Happy</h2>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv">Manage Inventory</a></p>
+  <% } %>
+  <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information and Password</a></p>
+</div>

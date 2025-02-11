@@ -1,17 +1,5 @@
 <div class="account-container">
-    <% if (title) { %>
-        <h1><%= title %></h1>
-        <% } else { res.redirect('/') } %>
-        
-        <%- messages() %>
-    
-        <% if (errors) { %>
-        <ul class="notice">
-            <% errors.array().forEach(error => { %>
-            <li><%= error.msg %></li>
-            <% }) %>
-        </ul>
-        <% } %>
+    <h1><%= title %></h1>
         
     <form id="loginForm" action="/account/login" method="post">
         <div class="form-group">

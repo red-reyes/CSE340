@@ -3,6 +3,10 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const Util = {};
 
+const { body, validationResult } = require("express-validator");
+
+const validate = {};
+
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -76,6 +80,31 @@ Util.buildLoginView = function() {
     </form>
   `;
   return loginView;
+};
+
+/* **************************************
+* Build the account registration view HTML
+* ************************************ */
+Util.buildRegisterView = function() {
+  let registerView = `
+    <form id="registerForm" action="/account/register" method="post">
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="firstname" name="account_firstname" required>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="lastname" name="account_lastname" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="account_email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="account_password" required>
+
+        <button type="submit">Register</button>
+    </form>
+  `;
+  return registerView;
 };
 
 /* **************************************
