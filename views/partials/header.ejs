@@ -3,10 +3,12 @@
     <a href="/" title="Return to home page">CSE Motors</a>
   </span>
   <div id="tools">
-    <% if (authenticated) { %>
-      <span>Welcome <%= account_firstname %> (<%= account_type %>)</span>
+    <% if (locals.loggedIn) { %>
+      <a href="/account/manage" title="Manage your account">Welcome <%= locals.account_firstname %></a>
       <a href="/account/logout" title="Click to log out">Logout</a>
-      <a href="/account/update/<%= user.account_id %>" title="Update Information & Password">Update Information & Password</a>
+      <a href="/account/add-classification" title="Add Classification">Add Classification</a>
+      <a href="/account/add-vehicle" title="Add Vehicle">Add Vehicle</a>
+      <a href="/account/manage-inventory" title="Manage Inventory">Manage Inventory</a>
     <% } else { %>
       <a href="/account/login" title="Click to log in">My Account</a>
     <% } %>

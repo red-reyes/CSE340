@@ -114,6 +114,8 @@ async function registerAccount(req, res) {
     })
   }
 
+
+  try {
   const regResult = await accountModel.registerAccount(
     account_firstname,
     account_lastname,
@@ -138,6 +140,14 @@ async function registerAccount(req, res) {
       errors: null,
     })
   }
+} catch (error) {
+  req.flash("notice", "Sorry, the registration failed.")
+  res.status(501).render("account/register", {
+    title: "Registration",
+    nav,
+    errors: null,
+  });
+}
 }
 
 /* ****************************************
