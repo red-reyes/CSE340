@@ -51,15 +51,9 @@ app.use(cookieParser());
 app.use(utilities.checkJWTToken);
 
 app.use((req, res, next) => {
-  if (req.session.user) {  // Use session to check if user is logged in
-    res.locals.loggedIn = true;
-    res.locals.account_firstname = req.session.user.account_firstname;
-    res.locals.account_type = req.session.user.account_type;  // Add account type
-  } else {
-    res.locals.loggedIn = false;
-    res.locals.account_firstname = null;
-    res.locals.account_type = null;
-  }
+  res.locals.loggedIn = req.session.user ? true : false;
+  res.locals.account_firstname = req.session.user ? req.session.user.account_firstname : null;
+  res.locals.account_type = req.session.user ? req.session.user.account_type : null;
   next();
 });
 
