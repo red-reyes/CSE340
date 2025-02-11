@@ -176,9 +176,9 @@ async function manageAccount(req, res) {
  *  Process account update
  * ************************************ */
 async function updateAccount(req, res) {
-  let nav = await utilities.getNav()
-  const { account_firstname, account_lastname, account_email } = req.body
-  const account_id = req.user.account_id
+  let nav = await utilities.getNav();
+  const { account_firstname, account_lastname, account_email } = req.body;
+  const account_id = req.user.account_id;
 
   // Server-side validation
   if (!account_firstname || !account_lastname || !account_email) {
@@ -191,11 +191,11 @@ async function updateAccount(req, res) {
     account_firstname,
     account_lastname,
     account_email
-  )
+  );
 
   if (updateResult) {
-    req.flash("notice", "Account updated successfully.")
-    res.redirect("/account/")
+    req.flash("notice", "Account updated successfully.");
+    res.redirect("/account/update/${account_id}");
   } else {
     req.flash("notice", "Sorry, the update failed.")
     res.status(500).render("account/update", {
