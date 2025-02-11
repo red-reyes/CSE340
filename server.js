@@ -34,27 +34,32 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
-}))
+}));
 
 // Unit 4, Express Messages Middleware
-app.use(require('connect-flash')())
+app.use(require('connect-flash')());
 app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true})) //for parsing application/x-www-form-urlencoded
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(cookieParser());
 
 // Unit 5 *****THIS IS GIVING ME ISSUE AS WELL**********************
-app.use(utilities.checkJWTToken) 
-
+app.use(utilities.checkJWTToken);
 
 app.use((req, res, next) => {
-  // Make `user` and `authenticated` available in templates
-  res.locals.user = req.user;
-  res.locals.authenticated = req.user && !req.user.anonymous;
+  if (req.session.user) {  // Use session to check if user is logged in
+    res.locals.loggedIn = true;
+    res.locals.account_firstname = req.session.user.account_firstname;
+    res.locals.account_type = req.session.user.account_type;  // Add account type
+  } else {
+    res.locals.loggedIn = false;
+    res.locals.account_firstname = null;
+    res.locals.account_type = null;
+  }
   next();
 });
 
