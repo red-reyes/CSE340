@@ -4,20 +4,8 @@
   </span>
   <div id="tools">
     <% if (locals.loggedIn) { %>
-      <a href="/account/manage" title="Manage your account">Welcome <%= locals.account_type %> <%= locals.account_firstname %></a>
+      <a href="/account/manage" title="Manage your account">Welcome <%= locals.account_firstname %></a>
       <a href="/account/logout" title="Click to log out">Logout</a>
-
-      <% if (locals.account_type === 'Client') { %>
-        <a href="/account/update-info" title="Update your information">Update Information</a>
-        <a href="/account/change-password" title="Change your password">Change Password</a>
-      <% } else if (locals.account_type === 'Employee' || locals.account_type === 'Admin') { %>
-        <a href="/account/update-info" title="Update your information">Update Information</a>
-        <a href="/account/change-password" title="Change your password">Change Password</a>
-        <a href="/account/add-classification" title="Add Classification">Add Classification</a>
-        <a href="/account/add-vehicle" title="Add Vehicle">Add Vehicle</a>
-        <a href="/account/manage-inventory" title="Manage Inventory">Manage Inventory</a>
-      <% } %>
-      
     <% } else { %>
       <a href="/account/login" title="Click to log in">My Account</a>
     <% } %>
