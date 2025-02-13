@@ -3,10 +3,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const Util = {};
 
-const { body, validationResult } = require("express-validator");
-
-const validate = {};
-
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -226,6 +222,9 @@ Util.checkAccountType = (req, res, next) => {
   const accountType = res.locals.accountData.account_type;
   if (accountType === 'Employee' || accountType === 'Admin') {
     next();
+  } else if (accountType === 'Client') {
+    req.flash("notice", "Clients do not have the required permissions to access this resource.");
+    return res.redirect("/account/login");
   } else {
     req.flash("notice", "You do not have the required permissions to access this resource.");
     return res.redirect("/account/login");
@@ -263,6 +262,111 @@ Util.buildEditInventoryItemView = function(vehicle) {
     </form>
   `;
   return editInventoryView;
+};
+
+/* **************************************
+* Build the management view HTML
+* ************************************ */
+Util.buildManagementView = async function() {
+  let data = await invModel.getClassifications();
+  let managementView = `
+    <h1>Management View</h1>
+    <div>
+      <h2>Classifications</h2>
+      <ul>
+  `;
+  data.rows.forEach((row) => {
+    managementView += `<li>${row.classification_name}</li>`;
+  });
+  managementView += `
+      </ul>
+    </div>
+  `;
+  return managementView;
+};
+
+/* **************************************
+* Build the add classification view
+* ************************************ */
+Util.buildAddClassification = function() {
+  let addClassificationView = `
+    <form id="addClassificationForm" action="/classification/add" method="POST">
+      <label for="classification_name">Classification Name:</label>
+      <input type="text" id="classification_name" name="classification_name" required>
+      
+      <button type="submit">Add Classification</button>
+    </form>
+  `;
+  return addClassificationView;
+};
+
+/* **************************************
+* Build the add inventory view
+* ************************************ */
+Util.buildAddInventory = function() {
+  let addInventoryView = `
+    <form id="addInventoryForm" action="/inventory/add" method="POST">
+      <label for="inv_make">Make:</label>
+      <input type="text" id="inv_make" name="inv_make" required>
+      
+      <label for="inv_model">Model:</label>
+      <input type="text" id="inv_model" name="inv_model" required>
+      
+      <label for="inv_year">Year:</label>
+      <input type="number" id="inv_year" name="inv_year" required>
+      
+      <label for="inv_description">Description:</label>
+      <textarea id="inv_description" name="inv_description" required></textarea>
+      
+      <label for="inv_price">Price:</label>
+      <input type="number" id="inv_price" name="inv_price" required>
+      
+      <label for="inv_miles">Miles:</label>
+      <input type="number" id="inv_miles" name="inv_miles" required>
+      
+      <label for="inv_color">Color:</label>
+      <input type="text" id="inv_color" name="inv_color" required>
+      
+      <button type="submit">Add Inventory</button>
+    </form>
+  `;
+  return addInventoryView;
+};
+
+/* **************************************
+* Add classification
+* ************************************ */
+Util.addClassification = async function(req, res) {
+  const { classification_name } = req.body;
+  await invModel.addClassification(classification_name);
+  res.redirect('/management');
+};
+
+/* **************************************
+* Add inventory
+* ************************************ */
+Util.addInventory = async function(req, res) {
+  const { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color } = req.body;
+  await invModel.addInventory(inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color);
+  res.redirect('/management');
+};
+
+/* **************************************
+* Build the edit inventory view
+* ************************************ */
+Util.editInventoryView = async function(req, res) {
+  const vehicle = await invModel.getInventoryById(req.params.id);
+  const editInventoryView = Util.buildEditInventoryItemView(vehicle);
+  res.send(editInventoryView);
+};
+
+/* **************************************
+* Update inventory item
+* ************************************ */
+Util.updateInventoryItem = async function(req, res) {
+  const { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color } = req.body;
+  await invModel.updateInventory(req.params.id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color);
+  res.redirect('/management');
 };
 
 module.exports = Util;

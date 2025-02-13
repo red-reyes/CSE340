@@ -57,6 +57,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Logout route
+app.get('/account/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.redirect('/');
+    }
+    res.clearCookie('sessionId');
+    res.redirect('/account/login');
+  });
+});
+
 /* ***********************
  * View Engine and Templates
  *************************/
