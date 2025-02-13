@@ -53,7 +53,7 @@ router.post(
 
 // Process password change
 router.post(
-    '/change-password/:account_password', 
+    '/change-password/:account_id', 
     utilities.checkLogin, 
     regValidate.passwordChangeRules(),
     regValidate.checkPasswordChangeData,

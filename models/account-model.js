@@ -67,12 +67,12 @@ async function updateAccount(account_id, account_firstname, account_lastname, ac
 /* **********************
  *   Update password
  * ********************* */
-async function updatePassword(account_id, account_password){
+async function updatePassword(account_id, account_password) {
   try {
-    const sql = "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *"
-    return await pool.query(sql, [account_password, account_id])
+    const sql = "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *";
+    return await pool.query(sql, [account_password, account_id]);
   } catch (error) {
-    return error.message
+    return error.message;
   }
 }
 
