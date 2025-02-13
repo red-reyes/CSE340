@@ -118,7 +118,7 @@ invCont.addClassification = async (req, res, next) => {
     // Ensure input is provided
     if (!classification_name || classification_name.trim() === "") {
       req.flash("error", "Classification name is required.");
-      return res.redirect("/inventory/add-classification");
+      return res.redirect("/inv/add-classification");
     }
 
     // Insert into database
@@ -126,15 +126,15 @@ invCont.addClassification = async (req, res, next) => {
 
     if (newClassification) {
       req.flash("success", "New classification added successfully.");
-      return res.redirect("/inventory");
+      return res.redirect("/inv");
     } else {
       req.flash("error", "Database insertion failed.");
-      return res.redirect("/inventory/add-classification");
+      return res.redirect("/inv/add-classification");
     }
   } catch (error) {
     console.error("Error adding classification:", error);
     req.flash("error", "An error occurred while adding classification.");
-    return res.redirect("/inventory/add-classification");
+    return res.redirect("/inv/add-classification");
   }
 };
 
@@ -163,13 +163,13 @@ invCont.addInventory = async (req, res, next) => {
     // Ensure year is a valid number
     if (isNaN(inv_year) || inv_year < 1886 || inv_year > new Date().getFullYear()) {
       req.flash("error", "Invalid vehicle year.");
-      return res.redirect("/inventory/add-inventory");
+      return res.redirect("/inv/add-inventory");
     }
 
     // Ensure price is a number
     if (isNaN(inv_price) || inv_price <= 0) {
       req.flash("error", "Price must be a valid number.");
-      return res.redirect("/inventory/add-inventory");
+      return res.redirect("/inv/add-inventory");
     }
 
     // Insert into database
@@ -188,15 +188,15 @@ invCont.addInventory = async (req, res, next) => {
 
     if (newVehicle) {
       req.flash("success", "New vehicle added successfully.");
-      return res.redirect("/inventory");
+      return res.redirect("/inv");
     } else {
       req.flash("error", "Failed to add vehicle.");
-      return res.redirect("/inventory/add-inventory");
+      return res.redirect("/inv/add-inventory");
     }
   } catch (error) {
     console.error("Error adding vehicle:", error);
     req.flash("error", "An error occurred while adding the vehicle.");
-    return res.redirect("/inventory/add-inventory");
+    return res.redirect("/inv/add-inventory");
   }
 };
 

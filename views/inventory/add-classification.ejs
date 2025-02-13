@@ -1,13 +1,7 @@
 <div class="account-container">
-    <% if (typeof flashMessage !== 'undefined') { %>
-        <div class="flash-message">
-            <%= flashMessage %>
-        </div>
-    <% } %>
-    
     <h1><%= title %></h1>
 
-    <form id="add-classification-form" action="/inventory/add-classification" method="POST">
+    <form id="add-classification-form" action="/inv/add-classification" method="POST">
         <div class="form-group">
             <label for="classification_name">Classification Name:</label>
             <input 
