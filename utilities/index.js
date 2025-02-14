@@ -207,11 +207,11 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
+  if (req.session.user) {
     next();
   } else {
-    req.flash("notice", "Please log in.");
-    return res.redirect("/account/login");
+    req.flash("error", "You must be logged in to access this page.");
+    res.redirect("/account/login");
   }
 };
 
@@ -219,15 +219,12 @@ Util.checkLogin = (req, res, next) => {
  *  Check Account Type
  * ************************************ */
 Util.checkAccountType = (req, res, next) => {
-  const accountType = res.locals.accountData.account_type;
+  const accountType = req.session.user ? req.session.user.account_type : null;
   if (accountType === 'Employee' || accountType === 'Admin') {
     next();
-  } else if (accountType === 'Client') {
-    req.flash("notice", "Clients do not have the required permissions to access this resource.");
-    return res.redirect("/account/login");
   } else {
-    req.flash("notice", "You do not have the required permissions to access this resource.");
-    return res.redirect("/account/login");
+    req.flash("error", "You do not have the required permissions to access this resource.");
+    res.redirect("/account/login");
   }
 };
 

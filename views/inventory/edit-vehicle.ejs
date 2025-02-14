@@ -1,15 +1,4 @@
-<div class = "error">
-    <%- messages() %>
-      <% if (errors) { %>
-          <ul>
-              <% errors.forEach(error => { %>
-                  <li><%= error.msg %></li>
-              <% }) %>
-          </ul>
-      <% } %>
-  </div>
-  
-<div class="account-container"></div>
+ <div class="account-container"></div>
     <h1><%= title %></h1>
     <form action="/inventory/<%= vehicle.inv_id %>" method="POST">
         <div>

@@ -63,25 +63,24 @@ invCont.buildByVehicleId = async function (req, res, next) {
 /* ***************************
  *  Build vehicle management view
  * ************************** */
-invCont.buildManagementView = async function (req, res, next) {
-  try {
-    if (req.session.account_type !== 'Admin' && req.session.account_type !== 'Employee') {
-      req.flash("error", "You must be logged in as an Admin or Employee to access this page.");
-      return res.redirect("./account/login");
+invCont.buildManagementView = [
+  utilities.checkLogin,
+  utilities.checkAccountType,
+  async function (req, res, next) {
+    try {
+      let nav = await utilities.getNav();
+      const classificationSelect = await utilities.buildClassificationList();
+      res.render("./inventory/management", {
+        title: "Vehicle Management",
+        nav,
+        errors: null,
+        classificationSelect,
+      });
+    } catch (error) {
+      next(error);
     }
-
-    let nav = await utilities.getNav();
-    const classificationSelect = await utilities.buildClassificationList();
-    res.render("./inventory/manage", {
-      title: "Vehicle Management",
-      nav,
-      errors: null,
-      classificationSelect,
-    });
-  } catch (error) {
-    next(error);
   }
-};
+];
 
 /* ***************************
  *  Build add classification view
