@@ -97,14 +97,14 @@ invCont.buildAddClassification = async (req, res, next) => {
 /* ***************************
  *  Build add inventory view
  * ************************** */
-invCont.buildAddInventory = async (req, res, next) => {
+invCont.buildAddInventory = async function (req, res, next) {
   try {
-    let nav = await utilities.getNav();
     const classifications = await invModel.getClassifications();
-    res.render("./inventory/add-inventory", {
-      title: "Add New Vehicle",
+    let nav = await utilities.getNav();
+    res.render("inventory/add-inventory", {
+      title: "Add New Inventory",
       nav,
-      classifications,
+      classifications: classifications.rows,
       errors: null,
     });
   } catch (error) {
