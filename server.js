@@ -84,8 +84,14 @@ app.use(express.static("public")); // Serve static files
 // Index Routes
 app.get("/", utilities.handleErrors(baseController.buildHome));
 
-// Inventory routes
-app.use('/inv', utilities.handleErrors(require("./routes/inventoryRoute")));
+// Inventory routes with login and account type check middleware
+app.use('/inv', utilities.checkLogin, (req, res, next) => {
+  if (req.session.user && (req.session.user.account_type === 'Employee' || req.session.user.account_type === 'Admin')) {
+    next();
+  } else {
+    res.redirect('/account/login');
+  }
+}, utilities.handleErrors(require("./routes/inventoryRoute")));
 
 // Account routes
 app.use('/account', utilities.handleErrors(require("./routes/accountRoute")));
