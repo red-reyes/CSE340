@@ -15,11 +15,11 @@ invCont.triggerError = (req, res, next) => {
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   try {
-    const classification_id = req.params.classificationId;
+    const classification_id = req.params.classification_id;
     const data = await invModel.getInventoryByClassificationId(classification_id);
     const grid = await utilities.buildClassificationGrid(data);
     let nav = await utilities.getNav();
-    const className = data[0].classification_name;
+    const className = data.length > 0 ? data[0].classification_name : "No vehicles found";
     res.render("./inventory/classification", {
       title: className + " vehicles",
       nav,
@@ -31,11 +31,13 @@ invCont.buildByClassificationId = async function (req, res, next) {
   }
 };
 
-// vehicle details
+/* ***************************
+ *  Build vehicle details view
+ * ************************** */
 invCont.buildByVehicleId = async function (req, res, next) {
   try {
-    const vehicle_id = req.params.vehicleId;
-    const data = await invModel.getVehicleById(vehicle_id);
+    const inv_id = req.params.inv_id;
+    const data = await invModel.getVehicleById(inv_id);
     let nav = await utilities.getNav();
 
     if (!data) {
