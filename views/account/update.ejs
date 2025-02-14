@@ -1,3 +1,14 @@
+<div class = "error">
+  <%- messages() %>
+    <% if (errors) { %>
+        <ul>
+            <% errors.forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+</div>
+
 <div class="account-container">
   <h1><%= title %></h1>
   <h2>Account Update</h2>

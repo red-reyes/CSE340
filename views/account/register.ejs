@@ -1,4 +1,15 @@
-<div class="account-container">
+<div class = "error">
+    <%- messages() %>
+      <% if (errors) { %>
+          <ul>
+              <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+              <% }) %>
+          </ul>
+      <% } %>
+  </div>
+
+    <div class="account-container">
     <h1><%= title %></h1>
     <form id="registerForm" action="/account/register" method="post">
         <p>*All fields are required</p>

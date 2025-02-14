@@ -1,6 +1,16 @@
-<div class="account-container">
-      
-    <h1><%= title %></h1>
+<div class = "error">
+    <%- messages() %>
+      <% if (errors) { %>
+          <ul>
+              <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+              <% }) %>
+          </ul>
+      <% } %>
+  </div>
+
+<div class="account-container">        
+   <h1><%= title %></h1>
     <form id="loginForm" action="/account/login" method="post">
         <div class="form-group">
             <label for="email">Email:</label>

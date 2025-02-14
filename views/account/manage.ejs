@@ -1,3 +1,12 @@
+<%- messages() %>
+    
+    <% if (errors) { %>
+    <ul class="notice"></ul>
+        <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+    <% } %>
 <div class="account-container">
   <h1>Account Management</h1>
   <h2>Hello, <%= accountData.account_firstname %></h2>

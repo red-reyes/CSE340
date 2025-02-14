@@ -1,9 +1,15 @@
+<div class = "error">
+    <%- messages() %>
+      <% if (errors) { %>
+          <ul>
+              <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+              <% }) %>
+          </ul>
+      <% } %>
+  </div>
+  
 <div class="account-container">
-    <% if (typeof flashMessage !== 'undefined') { %>
-        <div class="flash-message">
-            <%= flashMessage %>
-        </div>
-    <% } %>
     <h1><%= title %></h1>
     
     <p>Confirm Deletion - The delete is permanent.</p>

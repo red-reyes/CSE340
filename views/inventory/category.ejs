@@ -1,3 +1,16 @@
+
+
+<div class = "error">
+  <%- messages() %>
+    <% if (errors) { %>
+        <ul>
+            <% errors.forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+</div>
+
 <h1><%= pageTitle %></h1>
 
 <div class="vehicle-list">

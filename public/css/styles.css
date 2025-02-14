@@ -361,19 +361,14 @@ fieldset {
 }
 
 /* error message */
-.error-message, .flash-message {
+.error {
   padding: 20px;
-  color: #ffffff;
-  background-color: #141f61;
+  color: #000000;
   text-align: center;
+  font-size: large;
 }
-
-.error-message h1 {
-  font-size: 40pt;
-}
-.error-message h2{
-  font-size: 30pt;
-  padding: 10px;
+.error ul li {
+  list-style-type: none;
 }
 /* Media Queries for Larger Screens */
 @media screen and (min-width: 768px) {
