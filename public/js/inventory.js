@@ -2,6 +2,9 @@
 //  Unit 5
 // Get a list of items in inventory based on the classification_id 
 let classificationList = document.querySelector("#classificationList");
+// Add the custom class to the classificationSelect dropdown
+classificationList.classList.add("custom-dropdown");
+
 classificationList.addEventListener("change", function () { 
   let classification_id = classificationList.value;
   console.log(`classification_id is: ${classification_id}`);

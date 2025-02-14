@@ -11,12 +11,7 @@
         <div class="classification-group">
             <select id="classification" name="classification" required>
                 <option value="">Select Classification</option>
-                <option value="custom" <%= typeof classification !== 'undefined' && classification === 'custom' ? 'selected' : '' %>>Custom</option>
-                <option value="sedan" <%= typeof classification !== 'undefined' && classification === 'sedan' ? 'selected' : '' %>>Sedan</option>
-                <option value="sport" <%= typeof classification !== 'undefined' && classification === 'sport' ? 'selected' : '' %>>Sport</option>
-                <option value="suv" <%= typeof classification !== 'undefined' && classification === 'suv' ? 'selected' : '' %>>SUV</option>
-                <option value="truck" <%= typeof classification !== 'undefined' && classification === 'truck' ? 'selected' : '' %>>Truck</option>
-            </select>
+                <%- classificationSelect %>
         </div>
         <div class="form-group">
             <label for="inv_make">Make:</label>

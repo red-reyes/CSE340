@@ -342,6 +342,15 @@ fieldset {
   color: yellow;
 }
 /* dropdown classification list */
+.custom-dropdown {
+  display: flex;
+  margin: 0 auto;
+  width: 60%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+}
 
 .classification-group, .description-group {
   width: 60%;
@@ -359,7 +368,13 @@ fieldset {
 #description {
   width: 100%;
 }
-
+/* inventoryDisplay */
+#inventoryDisplay {
+  display: flex;
+  margin: 0 auto;
+  padding-top: 20px;
+  color: white;
+}
 /* error message */
 .error {
   padding: 20px;
@@ -370,6 +385,8 @@ fieldset {
 .error ul li {
   list-style-type: none;
 }
+
+
 /* Media Queries for Larger Screens */
 @media screen and (min-width: 768px) {
   .hero-content h1{

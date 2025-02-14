@@ -29,13 +29,10 @@ router.post("/add-inventory", utilities.checkJWTToken, utilities.checkAccountTyp
 router.get("/getInventory/:classification_id", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.getInventoryJSON));
 
 // Route to get item id to edit
-router.get("/edit/:inv_id", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.editInventoryItem));
+router.get("/edit-vehicle/:inv_id", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.editInventoryView));
 
 // Process Edit Inventory Item Form
-router.post("/edit/:inv_id", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.editInventoryItem));
-
-// Process Update Inventory Item Form
-router.post("/update/:inv_d", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.updateInventoryItem));
+router.post("/inv/:inv_id", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.editInventoryView));
 
 // Route to build delete confirmation view
 router.get("/delete-confirm/:inv_d", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.builddeleteInventoryItem));
