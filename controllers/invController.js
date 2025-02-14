@@ -65,6 +65,11 @@ invCont.buildByVehicleId = async function (req, res, next) {
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
   try {
+    if (req.session.account_type !== 'Admin' && req.session.account_type !== 'Employee') {
+      req.flash("error", "You must be logged in as an Admin or Employee to access this page.");
+      return res.redirect("./account/login");
+    }
+
     let nav = await utilities.getNav();
     const classificationSelect = await utilities.buildClassificationList();
     res.render("./inventory/manage", {
