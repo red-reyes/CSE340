@@ -1,36 +1,56 @@
+<!-- EDIT A VEHICLE INFO -->
 <div class="account-container">
-<h1><%= title %></h1>
-<form action="/inventory/edit-vehicle/<%= inv_id %>" method="POST">
-    <div class="form-group">
-        <label for="classification_name">Classification:</label>
-        <%- classificationSelect %>
-    </div>
-    <div class="form-group">
-        <label for="inv_miles">Mileage:</label>
-        <input type="number" id="miles" name="inv_miles" value="<%= inv_miles %>" required>
-    </div>
 
-    <div class="form-group">
-        <label for="inv_make">Make:</label>
-        <input type="text" id="make" name="inv_make" value="<%= inv_make %>" required>
-    </div>
-    <div class="form-group">
-        <label for="inv_model">Model:</label>
-        <input type="text" id="model" name="inv_model" value="<%= inv_model %>" required>
-    </div>
-    <div class="form-group">
-        <label for="inv_year">Year:</label>
-        <input type="number" id="year" name="inv_year" value="<%= inv_year %>" required>
-    </div>
-    <div class="form-group">
-        <label for="inv_color">Color:</label>
-        <input type="text" id="color" name="inv_color" value="<%= inv_color %>" required>
-    </div>
-    <div class="form-group">
-        <label for="inv_price">Price:</label>
-        <input type="number" id="price" name="inv_price" value="<%= inv_price %>" required>
-    </div>
+    <h1><%= title %></h1>
     
-    <button type="submit">Update Vehicle</button>
-</form>
+    <form action="/inv/edit-vehicle/<%= inv_id %>" method="POST">
+        
+        <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
+
+        <div class="form-group">
+            <label for="classification_name">Classification:</label>
+            <%- classificationSelect %>
+        </div>
+        <div class="form-group"> 
+            <label for="inv_make">Make:</label>
+            <input type="text" id="inv_make" name="inv_make" <% if(locals.inv_make) { %> value="<%= locals.inv_make %>" <% } %> placeholder="Min of 3 Characters" required>
+        </div>
+        <div class="form-group">
+            <label for="inv_model">Model:</label>
+            <input type="text" id="inv_model" name="inv_model" <% if(locals.inv_model) { %> value="<%= locals.inv_model %>" <% } %> placeholder="Min of 3 Characters" required>
+        </div>
+        <div class="form-group">
+            <label for="inv_year">Year:</label>
+            <input type="number" id="inv_year" name="inv_year" <% if(locals.inv_year) { %> value="<%= locals.inv_year %>" <% } %> placeholder="4-digit year" required>
+        </div>
+        <div class="form-group">
+            <label for="inv_description">Description:</label>
+        </div>
+        <div class="description-group">
+            <textarea id="inv_description" name="inv_description" required><%= locals.inv_description ? locals.inv_description : '' %></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imagePath">Image Path:</label>
+            <input type="text" id="imagePath" name="imagePath" <% if(locals.imagePath) { %> value="<%= locals.imagePath %>" <% } else { %> value="/images/no-image.png" <% } %> required>
+        </div>
+        <div class="form-group">
+            <label for="thumbnailPath">Thumbnail Path:</label>
+            <input type="text" id="thumbnailPath" name="thumbnailPath" <% if(locals.thumbnailPath) { %> value="<%= locals.thumbnailPath %>" <% } else { %> value="/images/no-image-thumbnail.png" <% } %> required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="inv_price" name="inv_price" <% if(locals.inv_price) { %> value="<%= locals.inv_price %>" <% } %> placeholder="decimal or integer" required>
+        </div>
+        <div class="form-group">
+            <label for="miles">Miles:</label>
+            <input type="number" id="inv_miles" name="inv_miles" <% if(locals.inv_miles) { %> value="<%= locals.inv_miles %>" <% } %> placeholder="digits only" required>
+        </div>
+        <div class="form-group">
+            <label for="color">Color:</label>
+            <input type="text" id="inv_color" name="inv_color" <% if(locals.inv_color) { %> value="<%= locals.inv_color %>" <% } %> placeholder="Min of 3 characters" required>
+        </div>
+        <button type="submit">Update Vehicle</button>
+    </form>
 </div>
+
+<script src="/js/inv-update.js"></script>
