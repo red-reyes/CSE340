@@ -63,4 +63,7 @@ router.post(
 // Process logout
 router.get('/logout', utilities.handleErrors(accountController.logoutAccount));
 
+// Delete Account
+router.post('/delete/:account_id', accountController.deleteAccount);
+
 module.exports = router;

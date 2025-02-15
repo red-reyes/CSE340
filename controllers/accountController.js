@@ -15,7 +15,7 @@ async function buildLogin(req, res, next) {
 }
 
 // deliver register view
-async function buildRegister(req, res, next) {
+async function buildRegister(req, res,) {
   let nav = await utilities.getNav()
   res.render("account/register", {
     title: "Register",
@@ -96,62 +96,29 @@ async function loginAccount(req, res) {
 *  Process Registration
 * *************************************** */
 async function registerAccount(req, res) {
-  let nav = await utilities.getNav()
-  const { 
-    account_firstname, 
-    account_lastname, 
-    account_email, 
-    account_password 
-  } = req.body
-
-  // Hash the password before storing
-  let hashedPassword
+  const { account_firstname, account_lastname, account_email, account_password } = req.body;
+  let hashedPassword;
   try {
-    // regular password and cost (salt is generated automatically)
-    hashedPassword = await bcrypt.hashSync(account_password, 10)
+    // Hash the password
+    hashedPassword = await bcrypt.hash(account_password, 10);
   } catch (error) {
-    req.flash("notice", 'Sorry, there was an error processing the registration.')
-    res.status(500).render("account/register", {
-      title: "Registration",
-      nav,
-      errors: null,
-    })
+    req.flash('error', 'Error hashing password.');
+    return res.redirect('/account/register');
   }
-
 
   try {
-  const regResult = await accountModel.registerAccount(
-    account_firstname,
-    account_lastname,
-    account_email,
-    hashedPassword
-  )
-
-  if (regResult) {
-    req.flash(
-      "notice",
-      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
-    )
-    res.status(201).render("account/login", {
-      title: "Login",
-      nav,
-    })
-  } else {
-    req.flash("notice", "Sorry, the registration failed.")
-    res.status(501).render("account/register", {
-      title: "Registration",
-      nav,
-      errors: null,
-    })
+    const result = await accountModel.registerAccount(account_firstname, account_lastname, account_email, hashedPassword);
+    if (result.rowCount > 0) {
+      req.flash('success', 'Account successfully created. Please log in.');
+      res.redirect('/account/login');
+    } else {
+      req.flash('error', 'Account creation failed.');
+      res.redirect('/account/register');
+    }
+  } catch (error) {
+    req.flash('error', 'An error occurred while creating the account.');
+    res.redirect('/account/register');
   }
-} catch (error) {
-  req.flash("notice", "Sorry, the registration failed.")
-  res.status(501).render("account/register", {
-    title: "Registration",
-    nav,
-    errors: null,
-  });
-}
 }
 
 /* ****************************************
@@ -245,6 +212,99 @@ async function logoutAccount(req, res) {
   res.redirect("/account/login")
 }
 
+/* ****************************************
+ *  Delete Account
+ * ************************************ */
+async function deleteAccount(req, res) {
+  const account_id = req.params.account_id;
+  try {
+    const deleteResult = await accountModel.deleteAccountById(account_id);
+    if (deleteResult) {
+      req.session.destroy((err) => {
+        if (err) {
+          req.flash('error', 'Error logging out after account deletion.');
+          return res.redirect(`/account/update/${account_id}`);
+        }
+        res.clearCookie('jwt');
+        req.flash('success', 'Account successfully deleted.');
+        res.redirect('/account/login');
+      });
+    } else {
+      req.flash('error', 'Deletion unsuccessful, try again.');
+      res.redirect(`/account/update/${account_id}`);
+    }
+  } catch (error) {
+    req.flash('error', 'An error occurred while deleting the account.');
+    res.redirect(`/account/update/${account_id}`);
+  }
+}
+
+// Manage Others for 'Admin'
+// deliver manage others view
+async function buildManageOthers(req, res, next) {
+  let nav = await utilities.getNav();
+  const clients = await accountModel.getAllClients(); // Assuming you have a function to get all clients
+  res.render("account/manageothers", {
+    title: "Manage Clients",
+    nav,
+    clients,
+    errors: null,
+  });
+}
+/* ****************************************
+ *  Suspend Client
+ * ************************************ */
+async function suspendClient(req, res) {
+  try {
+    await accountModel.updateAccountStatus(account_id, 'suspended');
+    req.flash('success', 'Client account suspended successfully.');
+  } catch (error) {
+    req.flash('error', 'Error suspending client account.');
+  }
+  res.redirect('/account/manageothers');
+}
+
+/* ****************************************
+ *  Activate Client
+ * ************************************ */
+async function activateClient(req, res) {
+  try {
+    await accountModel.updateAccountStatus(req.body.account_id, 'active');
+    req.flash('success', 'Client account activated successfully.');
+  } catch (error) {
+    req.flash('error', 'Error activating client account.');
+  }
+  res.redirect('/account/manageothers');
+}
+
+/* ****************************************
+ *  Delete Client
+ * ************************************ */
+async function deleteClient(req, res) {
+  try {
+    await accountModel.deleteAccount(req.body.account_id);
+    req.flash('success', 'Client account deleted successfully.');
+  } catch (error) {
+    req.flash('error', 'Error deleting client account.');
+  }
+  res.redirect('/account/manageothers');
+}
+
+/* ****************************************
+ *  Reset Client Password
+ * ************************************ */
+async function resetClientPassword(req, res) {
+  const newPassword = 'newPassword123';
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await accountModel.updateAccountPassword(req.body.account_id, hashedPassword);
+    req.flash('success', 'Client password reset successfully.');
+  } catch (error) {
+    req.flash('error', 'Error resetting client password.');
+  }
+  res.redirect('/account/manageothers');
+}
+
 module.exports = { 
   buildLogin,
   buildRegister,
@@ -255,5 +315,6 @@ module.exports = {
   updateAccount,
   logoutAccount,
   buildUpdateAccount,
-  changePassword
+  changePassword,
+  deleteAccount
 }

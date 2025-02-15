@@ -70,3 +70,20 @@
     <button type="submit">Change Password</button>
   </form>
 </div>
+
+<div class="account-container">
+  <h2>Delete Account</h2>
+  <p>Warning: Deleting your account is irreversible. All your data will be permanently removed.</p>
+
+  <% if (typeof deleteStatus !== 'undefined') { %>
+    <% if (deleteStatus === 'success') { %>
+      <p class="success-message">Account successfully deleted</p>
+    <% } else if (deleteStatus === 'failure') { %>
+      <p class="error-message">Deletion unsuccessful, try again</p>
+    <% } %>
+  <% } %>
+
+  <form action="/account/delete/<%= accountData.account_id %>?status=delete" method="post">
+    <button type="submit" class="delete-button">Delete My Account</button>
+  </form>
+</div>
