@@ -35,15 +35,27 @@ async function buildManage(req, res, next) {
 }
 
 // deliver update view
-async function buildUpdateAccount(req, res, next) {
-  let nav = await utilities.getNav()
-  const accountData = await accountModel.getAccountById(req.params.account_id)
-  res.render("account/update", {
-    title: "Update Account Information",
-    nav,
-    userData: accountData,
-    errors: null,
-  })
+async function buildUpdateAccount(req, res) {
+  let nav = await utilities.getNav();
+  const account_id = req.params.account_id;
+
+  try {
+    const accountData = await accountModel.getAccountById(account_id);
+    if (accountData) {
+      res.render('account/update', {
+        title: 'Update Account',
+        nav,
+        accountData,
+        errors: null,
+      });
+    } else {
+      req.flash('error', 'Account not found.');
+      res.redirect('/account');
+    }
+  } catch (error) {
+    req.flash('error', 'An error occurred while fetching the account data.');
+    res.redirect('/account');
+  }
 }
 
 /* ****************************************
@@ -145,7 +157,7 @@ async function manageAccount(req, res) {
 async function updateAccount(req, res) {
   let nav = await utilities.getNav();
   const { account_firstname, account_lastname, account_email } = req.body;
-  const account_id = req.user.account_id;
+  const account_id = req.params.account_id;
 
   // Server-side validation
   if (!account_firstname || !account_lastname || !account_email) {
@@ -153,23 +165,29 @@ async function updateAccount(req, res) {
     return res.redirect(`/account/update/${account_id}`);
   }
 
-  const updateResult = await accountModel.updateAccount(
-    account_id,
-    account_firstname,
-    account_lastname,
-    account_email
-  );
+  try {
+    const updateResult = await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
 
-  if (updateResult) {
-    req.flash("notice", "Account updated successfully.");
-    res.redirect("/account/update/${account_id}");
-  } else {
-    req.flash("notice", "Sorry, the update failed.")
-    res.status(500).render("account/update", {
-      title: "Update Account",
-      nav,
-      errors: null,
-    })
+    if (updateResult.rowCount > 0) {
+      req.flash("notice", "Account updated successfully.");
+      res.redirect(`/account/update/${account_id}`);
+    } else {
+      req.flash("notice", "Sorry, the update failed.");
+      res.status(500).render("account/update", {
+        title: "Update Account",
+        nav,
+        accountData: { account_firstname, account_lastname, account_email },
+        errors: null,
+      });
+    }
+  } catch (error) {
+    req.flash('error', 'An error occurred while updating the account.');
+    res.redirect(`/account/update/${account_id}`);
   }
 }
 
@@ -225,7 +243,7 @@ async function deleteAccount(req, res) {
           req.flash('error', 'Error logging out after account deletion.');
           return res.redirect(`/account/update/${account_id}`);
         }
-        res.clearCookie('jwt');
+        res.clearCookie('sessionId');
         req.flash('success', 'Account successfully deleted.');
         res.redirect('/account/login');
       });
@@ -237,72 +255,6 @@ async function deleteAccount(req, res) {
     req.flash('error', 'An error occurred while deleting the account.');
     res.redirect(`/account/update/${account_id}`);
   }
-}
-
-// Manage Others for 'Admin'
-// deliver manage others view
-async function buildManageOthers(req, res, next) {
-  let nav = await utilities.getNav();
-  const clients = await accountModel.getAllClients(); // Assuming you have a function to get all clients
-  res.render("account/manageothers", {
-    title: "Manage Clients",
-    nav,
-    clients,
-    errors: null,
-  });
-}
-/* ****************************************
- *  Suspend Client
- * ************************************ */
-async function suspendClient(req, res) {
-  try {
-    await accountModel.updateAccountStatus(account_id, 'suspended');
-    req.flash('success', 'Client account suspended successfully.');
-  } catch (error) {
-    req.flash('error', 'Error suspending client account.');
-  }
-  res.redirect('/account/manageothers');
-}
-
-/* ****************************************
- *  Activate Client
- * ************************************ */
-async function activateClient(req, res) {
-  try {
-    await accountModel.updateAccountStatus(req.body.account_id, 'active');
-    req.flash('success', 'Client account activated successfully.');
-  } catch (error) {
-    req.flash('error', 'Error activating client account.');
-  }
-  res.redirect('/account/manageothers');
-}
-
-/* ****************************************
- *  Delete Client
- * ************************************ */
-async function deleteClient(req, res) {
-  try {
-    await accountModel.deleteAccount(req.body.account_id);
-    req.flash('success', 'Client account deleted successfully.');
-  } catch (error) {
-    req.flash('error', 'Error deleting client account.');
-  }
-  res.redirect('/account/manageothers');
-}
-
-/* ****************************************
- *  Reset Client Password
- * ************************************ */
-async function resetClientPassword(req, res) {
-  const newPassword = 'newPassword123';
-  try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await accountModel.updateAccountPassword(req.body.account_id, hashedPassword);
-    req.flash('success', 'Client password reset successfully.');
-  } catch (error) {
-    req.flash('error', 'Error resetting client password.');
-  }
-  res.redirect('/account/manageothers');
 }
 
 module.exports = { 

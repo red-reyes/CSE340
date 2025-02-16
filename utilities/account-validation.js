@@ -176,7 +176,7 @@ validate.checkUpdateAccountData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
     res.render(`account/update/${req.params.userId}`, {
-      errors,
+      errors: errors.array(),
       title: 'Update Account Information',
       nav,
       account_firstname,

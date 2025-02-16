@@ -83,7 +83,7 @@
     <% } %>
   <% } %>
 
-  <form action="/account/delete/<%= accountData.account_id %>?status=delete" method="post">
-    <button type="submit" class="delete-button">Delete My Account</button>
+  <form id="delete-account-form" action="/account/delete/<%= accountData.account_id %>?status=delete" method="post">
+    <button type="button" class="delete-button" onclick="confirmDelete()">Delete My Account</button>
   </form>
 </div>
