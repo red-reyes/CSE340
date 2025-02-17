@@ -116,7 +116,9 @@ invCont.buildAddInventory = async function (req, res, next) {
   }
 };
 
-// Process Add classification
+/***************************************************
+  Process Add classification 
+****************************************************/
 invCont.addClassification = async (req, res, next) => {
   try {
     const { classification_name } = req.body;
@@ -144,7 +146,9 @@ invCont.addClassification = async (req, res, next) => {
   }
 };
 
-// Process add new vehicle
+/***************************************************
+  Process Add Vehicle / add-inventory
+****************************************************/
 invCont.addInventory = async (req, res, next) => {
   try {
     const {
@@ -163,7 +167,7 @@ invCont.addInventory = async (req, res, next) => {
     // Validate required fields
     if (!inv_make || !inv_model || !inv_year || !inv_price || !classification_id) {
       req.flash("error", "All required fields must be filled.");
-      return res.redirect("/inventory/add-inventory");
+      return res.redirect("/inv/add-inventory");
     }
 
     // Ensure year is a valid number
@@ -179,7 +183,7 @@ invCont.addInventory = async (req, res, next) => {
     }
 
     // Insert into database
-    const newVehicle = await invModel.addVehicle({
+    const newVehicle = await invModel.addInventoryItem({
       inv_make,
       inv_model,
       inv_year,
@@ -196,7 +200,7 @@ invCont.addInventory = async (req, res, next) => {
       req.flash("success", "New vehicle added successfully.");
       return res.redirect("/inv");
     } else {
-      req.flash("error", "Failed to add vehicle.");
+      req.flash("error", "Database insertion failed.");
       return res.redirect("/inv/add-inventory");
     }
   } catch (error) {
@@ -206,23 +210,8 @@ invCont.addInventory = async (req, res, next) => {
   }
 };
 
-// Return Inventory by Classification as JSON
-invCont.getInventoryJSON = async (req, res, next) => {
-  try {
-    const classification_id = parseInt(req.params.classification_id);
-    const invData = await invModel.getInventoryByClassificationId(classification_id);
-    if (invData[0].inv_id) {
-      return res.json(invData);
-    } else {
-      next(new Error("No data returned"));
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
 /* ***************************
- *  Build edit/update a vehicle info
+ *  Build edit/update a vehicle info view
  * ************************** */
 invCont.editInventoryView = async function (req, res, next) {
   try {
@@ -273,23 +262,23 @@ invCont.updateInventoryItem = async (req, res, next) => {
     // Validate required fields
     if (!inv_id || !inv_make || !inv_model || !inv_year || !inv_price || !classification_id) {
       req.flash("error", "All required fields must be filled.");
-      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
+      return res.redirect(`/inv/edit-vehicle/${inv_id}`);
     }
 
     // Ensure year is a valid number
     if (isNaN(inv_year) || inv_year < 1886 || inv_year > new Date().getFullYear()) {
       req.flash("error", "Invalid vehicle year.");
-      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
+      return res.redirect(`/inv/edit-vehicle/${inv_id}`);
     }
 
     // Ensure price is a number
     if (isNaN(inv_price) || inv_price <= 0) {
       req.flash("error", "Price must be a valid number.");
-      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
+      return res.redirect(`/inv/edit-vehicle/${inv_id}`);
     }
 
     // Update in database
-    const updatedVehicle = await invModel.updateVehicle({
+    const updatedVehicle = await invModel.updateInventoryItem({
       inv_id,
       inv_make,
       inv_model,
@@ -305,15 +294,15 @@ invCont.updateInventoryItem = async (req, res, next) => {
 
     if (updatedVehicle) {
       req.flash("success", "Vehicle updated successfully.");
-      return res.redirect("/inventory");
+      return res.redirect("/inv");
     } else {
       req.flash("error", "Failed to update vehicle.");
-      return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
+      return res.redirect(`/inv/edit-vehicle/${inv_id}`);
     }
   } catch (error) {
     console.error("Error updating vehicle:", error);
     req.flash("error", "An error occurred while updating the vehicle.");
-    return res.redirect(`/inventory/edit-vehicle/${inv_id}`);
+    return res.redirect(`/inv/edit-vehicle/${inv_id}`);
   }
 };
 
@@ -357,15 +346,30 @@ invCont.deleteInventoryItem = async (req, res, next) => {
 
     if (deleteResult) {
       req.flash("success", "Vehicle deleted successfully.");
-      return res.redirect("/inventory");
+      return res.redirect("/inv");
     } else {
       req.flash("error", "Failed to delete vehicle.");
-      return res.redirect(`/inventory/delete-cofirm/${inv_id}`);
+      return res.redirect(`/inv/delete-cofirm/${inv_id}`);
     }
   } catch (error) {
     console.error("Error deleting vehicle:", error);
     req.flash("error", "An error occurred while deleting the vehicle.");
-    return res.redirect(`/inventory/delete-confirm/${inv_id}`);
+    return res.redirect(`/invdelete-confirm/${inv_id}`);
+  }
+};
+
+// Return Inventory by Classification as JSON
+invCont.getInventoryJSON = async (req, res, next) => {
+  try {
+    const classification_id = parseInt(req.params.classification_id);
+    const invData = await invModel.getInventoryByClassificationId(classification_id);
+    if (invData[0].inv_id) {
+      return res.json(invData);
+    } else {
+      next(new Error("No data returned"));
+    }
+  } catch (error) {
+    next(error);
   }
 };
 

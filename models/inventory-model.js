@@ -108,8 +108,8 @@ async function addVehicle(vehicle) {
 }
 
 // update inventory item
-async function updateInventoryItem(vehicle) {
-  const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = vehicle;
+async function updateInventoryItem(itemData) {
+  const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = itemData;
   try {
     const result = await pool.query(
       `UPDATE public.inventory 

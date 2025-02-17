@@ -31,11 +31,11 @@
         </div>
         <div class="form-group">
             <label for="imagePath">Image Path:</label>
-            <input type="text" id="imagePath" name="imagePath" <% if(locals.imagePath) { %> value="<%= locals.imagePath %>" <% } else { %> value="/images/no-image.png" <% } %> required>
+            <input type="text" id="imagePath" name="inv_image" <% if(locals.inv_image) { %> value="<%= locals.inv_image %>" <% } else { %> value="/images/no-image.png" <% } %> required>
         </div>
         <div class="form-group">
             <label for="thumbnailPath">Thumbnail Path:</label>
-            <input type="text" id="thumbnailPath" name="thumbnailPath" <% if(locals.thumbnailPath) { %> value="<%= locals.thumbnailPath %>" <% } else { %> value="/images/no-image-thumbnail.png" <% } %> required>
+            <input type="text" id="thumbnailPath" name="inv_thumbnail" <% if(locals.inv_thumbnail) { %> value="<%= locals.inv_thumbnail %>" <% } else { %> value="/images/no-image-thumbnail.png" <% } %>>
         </div>
         <div class="form-group">
             <label for="price">Price:</label>
