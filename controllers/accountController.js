@@ -155,35 +155,17 @@ async function manageAccount(req, res) {
  *  Process account update
  * ************************************ */
 async function updateAccount(req, res) {
-  let nav = await utilities.getNav();
-  const { account_firstname, account_lastname, account_email } = req.body;
   const account_id = req.params.account_id;
-
-  // Server-side validation
-  if (!account_firstname || !account_lastname || !account_email) {
-    req.flash('error', 'All fields are required.');
-    return res.redirect(`/account/update/${account_id}`);
-  }
+  const { account_firstname, account_lastname, account_email } = req.body;
 
   try {
-    const updateResult = await accountModel.updateAccount(
-      account_id,
-      account_firstname,
-      account_lastname,
-      account_email
-    );
-
-    if (updateResult.rowCount > 0) {
-      req.flash("notice", "Account updated successfully.");
+    const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
+    if (updateResult) {
+      req.flash('success', 'Account updated successfully.');
       res.redirect(`/account/update/${account_id}`);
     } else {
-      req.flash("notice", "Sorry, the update failed.");
-      res.status(500).render("account/update", {
-        title: "Update Account",
-        nav,
-        accountData: { account_firstname, account_lastname, account_email },
-        errors: null,
-      });
+      req.flash('error', 'Account update failed.');
+      res.redirect(`/account/update/${account_id}`);
     }
   } catch (error) {
     req.flash('error', 'An error occurred while updating the account.');

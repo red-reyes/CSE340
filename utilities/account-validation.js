@@ -93,13 +93,12 @@ validate.updateAccountRules = () => {
       .withMessage("A valid email is required.")
       .custom(async (account_email, { req }) => {
         const emailExists = await accountModel.checkExistingEmail(account_email);
-        if (emailExists && account_email !== req.user.account_email) {
+        if (emailExists && emailExists.id !== req.params.userId) {
           throw new Error("Email exists. Please use a different email");
         }
       }),
   ];
 };
-
 // Password Change Validation Rules
 validate.passwordChangeRules = () => {
   return [
